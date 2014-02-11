@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename package &apos;edu.kpi.master&apos; to &apos;edu.kpi.master.datatypes&apos;&#x0D;&#x0A;- Original project: &apos;SolvingMMkCPPwithDC&apos;&#x0D;&#x0A;- Original element: &apos;SolvingMMkCPPwithDC/src/edu.kpi.master&apos;&#x0D;&#x0A;- Renamed element: &apos;SolvingMMkCPPwithDC/src/edu.kpi.master.datatypes&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename package &apos;edu.kpi.master&apos;" flags="589830" hierarchical="false" id="org.eclipse.jdt.ui.rename.package" input="/src&lt;edu.kpi.master" name="edu.kpi.master.datatypes" qualified="false" references="true" stamp="1392138179746" textual="false" version="1.0"/>
+</session>
