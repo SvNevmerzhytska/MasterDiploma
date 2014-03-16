@@ -3,6 +3,7 @@ package edu.kpi.master.datatypes;
 import java.util.Set;
 
 public class Vertex {
+	
 	private String name;
 	private Set<Arc> incidentArcs;
 	private boolean depot;
