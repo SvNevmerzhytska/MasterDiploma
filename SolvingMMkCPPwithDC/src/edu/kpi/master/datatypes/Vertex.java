@@ -6,7 +6,6 @@ public class Vertex {
 	
 	private String name;
 	private Set<Arc> incidentArcs;
-	private boolean depot;
 	
 	public String getName() {
 		return name;
@@ -19,12 +18,6 @@ public class Vertex {
 	}
 	public void setIncidentArcs(Set<Arc> incidentArcs) {
 		this.incidentArcs = incidentArcs;
-	}
-	public boolean isDepot() {
-		return depot;
-	}
-	public void setDepot(boolean depot) {
-		this.depot = depot;
 	}
 
 }

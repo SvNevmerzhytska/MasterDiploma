@@ -6,10 +6,11 @@ public class Arc {
 	private Vertex endNode;
 	private int serviceCost;
 	private int transitCost;
-	private int demand;
-	private int priority;
 	private int deadline;
+	//time to traverse and to service the arc
 	private int serviceTime;
+	//deadline - serviceTime
+	private int reserve;
 	
 	
 	public Vertex getBeginNode() {
@@ -36,18 +37,6 @@ public class Arc {
 	public void setTransitCost(int transitCost) {
 		this.transitCost = transitCost;
 	}
-	public int getDemand() {
-		return demand;
-	}
-	public void setDemand(int demand) {
-		this.demand = demand;
-	}
-	public int getPriority() {
-		return priority;
-	}
-	public void setPriority(int priority) {
-		this.priority = priority;
-	}
 	public int getDeadline() {
 		return deadline;
 	}
@@ -59,6 +48,12 @@ public class Arc {
 	}
 	public void setServiceTime(int serviceTime) {
 		this.serviceTime = serviceTime;
+	}
+	public int getReserve() {
+		return reserve;
+	}
+	public void setReserve(int reserve) {
+		this.reserve = reserve;
 	}
 	
 
