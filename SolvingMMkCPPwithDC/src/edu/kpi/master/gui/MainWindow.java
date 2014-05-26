@@ -2,30 +2,47 @@ package edu.kpi.master.gui;
 
 import java.awt.EventQueue;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JSeparator;
 import javax.swing.JPanel;
+
 import java.awt.BorderLayout;
+
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
 import java.awt.Panel;
+
 import javax.swing.JToolBar;
 import javax.swing.JScrollPane;
+
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.filechooser.FileFilter;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.JProgressBar;
 import javax.swing.UIManager;
+
+import edu.kpi.master.gui.helper.FileChooserHelper;
+import edu.kpi.master.gui.helper.Utils;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MainWindow {
 
@@ -76,16 +93,31 @@ public class MainWindow {
 		menuBar.add(mnFile);
 		
 		JMenuItem mntmOpenFile = new JMenuItem("Open file");
+		mntmOpenFile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				FileChooserHelper.openFile(frmMmKcppWith);
+			}
+		});
 		mntmOpenFile.setIcon(new ImageIcon(MainWindow.class.getResource("/com/sun/java/swing/plaf/windows/icons/Directory.gif")));
 		mnFile.add(mntmOpenFile);
 		
 		JMenuItem mntmGenerateGraph = new JMenuItem("Generate graph");
+		mntmGenerateGraph.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Utils.showGenerateGraphDialog();
+			}
+		});
 		mnFile.add(mntmGenerateGraph);
 		
 		JSeparator separator = new JSeparator();
 		mnFile.add(separator);
 		
 		JMenuItem mntmSaveResults = new JMenuItem("Save results");
+		mntmSaveResults.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FileChooserHelper.saveFile(frmMmKcppWith);
+			}
+		});
 		mntmSaveResults.setIcon(new ImageIcon(MainWindow.class.getResource("/com/sun/java/swing/plaf/windows/icons/FloppyDrive.gif")));
 		mnFile.add(mntmSaveResults);
 		
@@ -93,6 +125,12 @@ public class MainWindow {
 		mnFile.add(separator_1);
 		
 		JMenuItem mntmExit = new JMenuItem("Exit");
+		mntmExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				frmMmKcppWith.setVisible(false);
+				frmMmKcppWith.dispose();
+			}
+		});
 		mnFile.add(mntmExit);
 		
 		JMenu mnHelp = new JMenu("Help");

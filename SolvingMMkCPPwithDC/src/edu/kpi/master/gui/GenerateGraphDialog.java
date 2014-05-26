@@ -26,6 +26,7 @@ public class GenerateGraphDialog extends JDialog {
 	private JTextField nArcs;
 	private JLabel lblNumberOfVehicles;
 	private JLabel lblNumberOfArcs;
+	private JLabel lblNumberOfVertexes;
 
 	/**
 	 * Launch the application.
@@ -66,6 +67,7 @@ public class GenerateGraphDialog extends JDialog {
 		}
 		{
 			nVehicles = new JTextField();
+			lblNumberOfVehicles.setLabelFor(nVehicles);
 			nVehicles.setText("1");
 			GridBagConstraints gbc_nVehicles = new GridBagConstraints();
 			gbc_nVehicles.fill = GridBagConstraints.BOTH;
@@ -75,10 +77,8 @@ public class GenerateGraphDialog extends JDialog {
 			contentPanel.add(nVehicles, gbc_nVehicles);
 			nVehicles.setColumns(10);
 		}
-		lblNumberOfVehicles.setLabelFor(nVehicles);
 		{
-			JLabel lblNumberOfVertexes = new JLabel("Number of vertexes:");
-			lblNumberOfVertexes.setLabelFor(lblNumberOfVertexes);
+			lblNumberOfVertexes = new JLabel("Number of vertexes:");
 			GridBagConstraints gbc_lblNumberOfVertexes = new GridBagConstraints();
 			gbc_lblNumberOfVertexes.fill = GridBagConstraints.BOTH;
 			gbc_lblNumberOfVertexes.insets = new Insets(0, 0, 5, 5);
@@ -88,6 +88,7 @@ public class GenerateGraphDialog extends JDialog {
 		}
 		{
 			nVertexes = new JTextField();
+			lblNumberOfVertexes.setLabelFor(nVertexes);
 			nVertexes.setText("2");
 			GridBagConstraints gbc_nVertexes = new GridBagConstraints();
 			gbc_nVertexes.fill = GridBagConstraints.BOTH;
@@ -97,7 +98,6 @@ public class GenerateGraphDialog extends JDialog {
 			contentPanel.add(nVertexes, gbc_nVertexes);
 			nVertexes.setColumns(10);
 		}
-		lblNumberOfArcs.setLabelFor(nArcs);
 		{
 			lblNumberOfArcs = new JLabel("Number of arcs:");
 			GridBagConstraints gbc_lblNumberOfArcs = new GridBagConstraints();
@@ -109,6 +109,7 @@ public class GenerateGraphDialog extends JDialog {
 		}
 		{
 			nArcs = new JTextField();
+			lblNumberOfArcs.setLabelFor(nArcs);
 			nArcs.setText("2");
 			GridBagConstraints gbc_nArcs = new GridBagConstraints();
 			gbc_nArcs.insets = new Insets(0, 0, 5, 0);
