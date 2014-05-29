@@ -15,12 +15,21 @@ import javax.swing.JScrollPane;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+
 import java.awt.GridLayout;
+
 import javax.swing.JTextField;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+
 import javax.swing.ImageIcon;
+
+import edu.kpi.master.gui.helper.Utils;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ViewGeneratedDataDetailsDialog extends JDialog {
 
@@ -157,6 +166,11 @@ public class ViewGeneratedDataDetailsDialog extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton cancelButton = new JButton("Back");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						Utils.hideGeneratedDataDialog();
+					}
+				});
 				cancelButton.setIcon(new ImageIcon(ViewGeneratedDataDetailsDialog.class.getResource("/images/back.png")));
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);

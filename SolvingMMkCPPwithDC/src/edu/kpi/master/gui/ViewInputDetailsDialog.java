@@ -11,13 +11,20 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.GridLayout;
+
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
+
+import edu.kpi.master.gui.helper.Utils;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ViewInputDetailsDialog extends JDialog {
 
@@ -162,6 +169,11 @@ public class ViewInputDetailsDialog extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton cancelButton = new JButton("Back");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						Utils.hideInputDetailsDialog();
+					}
+				});
 				cancelButton.setIcon(new ImageIcon(ViewInputDetailsDialog.class.getResource("/images/back.png")));
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);

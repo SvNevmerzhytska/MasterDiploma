@@ -38,7 +38,6 @@ public class Utils {
     
     public static void hideGenerateGraphDialog(){
     	generateGraphDialog.dispose();
-    	//generateGraphDialog.setVisible(true);
     }
     
     public static void showInputDetailsDialog(){
@@ -46,9 +45,17 @@ public class Utils {
     	viewInputDataDetails.setVisible(true);
     }
     
+    public static void hideInputDetailsDialog(){
+    	viewInputDataDetails.dispose();
+    }
+    
     public static void showResultDetailsDialog(){
     	viewResultDetails.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
     	viewResultDetails.setVisible(true);
+    }
+    
+    public static void hideResultDetailsDialog(){
+    	viewResultDetails.dispose();
     }
     
     public static void showGeneratedDataDialog(){
@@ -58,6 +65,5 @@ public class Utils {
     
     public static void hideGeneratedDataDialog(){
     	viewGeneratedDataDetails.dispose();
-    	//viewGeneratedDataDetails.setVisible(true);
     }
 }
