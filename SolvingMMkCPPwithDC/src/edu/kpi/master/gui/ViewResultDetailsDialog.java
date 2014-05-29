@@ -80,6 +80,7 @@ public class ViewResultDetailsDialog extends JDialog {
 			}
 			{
 				tfCompTime = new JTextField();
+				tfCompTime.setEditable(false);
 				GridBagConstraints gbc_tfCompTime = new GridBagConstraints();
 				gbc_tfCompTime.fill = GridBagConstraints.BOTH;
 				gbc_tfCompTime.insets = new Insets(0, 0, 5, 0);
@@ -99,6 +100,7 @@ public class ViewResultDetailsDialog extends JDialog {
 			}
 			{
 				ftMaxCost = new JTextField();
+				ftMaxCost.setEditable(false);
 				GridBagConstraints gbc_ftMaxCost = new GridBagConstraints();
 				gbc_ftMaxCost.fill = GridBagConstraints.BOTH;
 				gbc_ftMaxCost.gridx = 1;

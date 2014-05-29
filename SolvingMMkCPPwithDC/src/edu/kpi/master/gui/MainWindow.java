@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JMenu;
+import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.swing.JPanel;
 
@@ -115,7 +116,7 @@ public class MainWindow {
 		JMenuItem mntmSaveResults = new JMenuItem("Save results");
 		mntmSaveResults.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FileChooserHelper.saveFile(frmMmKcppWith);
+				FileChooserHelper.saveResultFile(frmMmKcppWith);
 			}
 		});
 		mntmSaveResults.setIcon(new ImageIcon(MainWindow.class.getResource("/com/sun/java/swing/plaf/windows/icons/FloppyDrive.gif")));
@@ -137,6 +138,11 @@ public class MainWindow {
 		menuBar.add(mnHelp);
 		
 		JMenuItem mntmAboutMmKcpp = new JMenuItem("About MM k-CPP with DC");
+		mntmAboutMmKcpp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane.showMessageDialog(frmMmKcppWith, "Bla bla about programm.", "About MM k-CPP with DC", JOptionPane.PLAIN_MESSAGE);
+			}
+		});
 		mnHelp.add(mntmAboutMmKcpp);
 		
 		JPanel Input = new JPanel();
@@ -208,6 +214,11 @@ public class MainWindow {
 		Input.add(textField_2, gbc_textField_2);
 		
 		JButton button = new JButton("Details");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Utils.showInputDetailsDialog();
+			}
+		});
 		button.setIcon(new ImageIcon(MainWindow.class.getResource("/images/info.png")));
 		GridBagConstraints gbc_button = new GridBagConstraints();
 		gbc_button.fill = GridBagConstraints.BOTH;
@@ -310,6 +321,11 @@ public class MainWindow {
 		textField_4.setColumns(10);
 		
 		JButton btnDetails = new JButton("Details");
+		btnDetails.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Utils.showResultDetailsDialog();
+			}
+		});
 		btnDetails.setIcon(new ImageIcon(MainWindow.class.getResource("/images/info.png")));
 		GridBagConstraints gbc_btnDetails = new GridBagConstraints();
 		gbc_btnDetails.fill = GridBagConstraints.BOTH;

@@ -13,10 +13,16 @@ import javax.swing.JMenuItem;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import edu.kpi.master.gui.helper.FileChooserHelper;
+import edu.kpi.master.gui.helper.Utils;
+
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class GenerateGraphDialog extends JDialog {
 
@@ -148,11 +154,21 @@ public class GenerateGraphDialog extends JDialog {
 			}
 			{
 				JButton btnDetails = new JButton("Details");
+				btnDetails.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						Utils.showGeneratedDataDialog();
+					}
+				});
 				btnDetails.setIcon(new ImageIcon(GenerateGraphDialog.class.getResource("/images/info.png")));
 				buttonPane.add(btnDetails);
 			}
 			{
 				JButton cancelButton = new JButton("Back");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						Utils.hideGenerateGraphDialog();
+					}
+				});
 				cancelButton.setIcon(new ImageIcon(GenerateGraphDialog.class.getResource("/images/back.png")));
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
@@ -166,6 +182,11 @@ public class GenerateGraphDialog extends JDialog {
 				menuBar.add(mnFile);
 				{
 					JMenuItem mntmSave = new JMenuItem("Save");
+					mntmSave.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							FileChooserHelper.saveFile(contentPanel);
+						}
+					});
 					mntmSave.setIcon(new ImageIcon(GenerateGraphDialog.class.getResource("/com/sun/java/swing/plaf/windows/icons/FloppyDrive.gif")));
 					mnFile.add(mntmSave);
 				}

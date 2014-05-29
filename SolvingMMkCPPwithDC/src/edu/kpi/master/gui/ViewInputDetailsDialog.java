@@ -80,6 +80,7 @@ public class ViewInputDetailsDialog extends JDialog {
 			}
 			{
 				tfVehicles = new JTextField();
+				tfVehicles.setEditable(false);
 				GridBagConstraints gbc_tfVehicles = new GridBagConstraints();
 				gbc_tfVehicles.fill = GridBagConstraints.BOTH;
 				gbc_tfVehicles.insets = new Insets(0, 0, 5, 0);
@@ -99,6 +100,7 @@ public class ViewInputDetailsDialog extends JDialog {
 			}
 			{
 				tfVertexes = new JTextField();
+				tfVertexes.setEditable(false);
 				GridBagConstraints gbc_tfVertexes = new GridBagConstraints();
 				gbc_tfVertexes.fill = GridBagConstraints.BOTH;
 				gbc_tfVertexes.insets = new Insets(0, 0, 5, 0);
@@ -118,6 +120,7 @@ public class ViewInputDetailsDialog extends JDialog {
 			}
 			{
 				tfArcs = new JTextField();
+				tfArcs.setEditable(false);
 				GridBagConstraints gbc_tfArcs = new GridBagConstraints();
 				gbc_tfArcs.fill = GridBagConstraints.BOTH;
 				gbc_tfArcs.gridx = 1;
