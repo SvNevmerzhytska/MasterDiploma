@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graph>
+	<vertexSet>
+		<vertex name="0"/>
+		<vertex name="1"/>
+		<vertex name="2"/>
+		<vertex name="3"/>
+		<vertex name="4"/>
+		<vertex name="5"/>
+		<vertex name="6"/>
+		<vertex name="7"/>
+		<vertex name="8"/>
+	</vertexSet>
+	<arcSet>
+		<arc begin="0" end="1" serviceCost="2" transitCost="1" deadline="5"/>
+		<arc begin="0" end="5" serviceCost="2" transitCost="1" deadline="10"/>
+		<arc begin="1" end="3" serviceCost="2" transitCost="1" deadline="5"/>
+		<arc begin="2" end="1" serviceCost="2" transitCost="1" deadline="10"/>
+		<arc begin="3" end="2" serviceCost="2" transitCost="1" deadline="10"/>
+		<arc begin="3" end="4" serviceCost="2" transitCost="1" deadline="15"/>
+		<arc begin="4" end="0" serviceCost="2" transitCost="1" deadline="15"/>
+		<arc begin="5" end="6" serviceCost="2" transitCost="1" deadline="5"/>
+		<arc begin="5" end="7" serviceCost="2" transitCost="1" deadline="10"/>
+		<arc begin="6" end="0" serviceCost="2" transitCost="1" deadline="5"/>
+		<arc begin="7" end="8" serviceCost="2" transitCost="1" deadline="15"/>
+		<arc begin="8" end="0" serviceCost="2" transitCost="1" deadline="15"/>
+	</arcSet>
+	<pathSet>
+		<path cost="13">
+			<arc begin="0" end="1" service="true"/>
+			<arc begin="1" end="3" service="true"/>
+			<arc begin="3" end="2" service="true"/>
+			<arc begin="2" end="1" service="true"/>
+			<arc begin="1" end="3" service="false"/>
+			<arc begin="3" end="4" service="true"/>
+			<arc begin="4" end="0" service="true"/>
+		</path>
+		<path cost="13">
+			<arc begin="0" end="5" service="false"/>
+			<arc begin="5" end="6" service="true"/>
+			<arc begin="6" end="0" service="true"/>
+			<arc begin="0" end="5" service="true"/>
+			<arc begin="5" end="7" service="true"/>
+			<arc begin="7" end="8" service="true"/>
+			<arc begin="8" end="0" service="true"/>
+		</path>
+	</pathSet>
+</graph>
