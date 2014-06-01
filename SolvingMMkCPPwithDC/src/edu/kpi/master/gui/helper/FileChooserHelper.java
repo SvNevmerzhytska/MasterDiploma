@@ -9,7 +9,10 @@ import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
+import edu.kpi.master.gui.MainWindow;
 import edu.kpi.master.io.Reader;
 
 public class FileChooserHelper {

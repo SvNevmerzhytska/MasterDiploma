@@ -36,6 +36,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JProgressBar;
 import javax.swing.UIManager;
 
+import edu.kpi.master.algorithm.PresetSolution;
 import edu.kpi.master.gui.helper.FileChooserHelper;
 import edu.kpi.master.gui.helper.Utils;
 
@@ -48,12 +49,12 @@ import java.awt.event.ActionEvent;
 public class MainWindow {
 
 	private JFrame frmMmKcppWith;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField nVehicles;
+	private JTextField nVertexes;
+	private JTextField nArcs;
 	private JTextField computationTime;
-	private JTextField textField_3;
-	private JTextField textField_4;
+	private JTextField maxCost;
+	private JTextField presetMaxCost;
 
 	/**
 	 * Launch the application.
@@ -83,6 +84,13 @@ public class MainWindow {
 	 */
 	private void initialize() {
 		frmMmKcppWith = new JFrame();
+		
+		//initial data
+		nVehicles = new JTextField();
+		nVertexes = new JTextField();
+		nArcs = new JTextField();
+		presetMaxCost = new JTextField();
+		
 		frmMmKcppWith.setTitle("MM k-CPP with DC");
 		frmMmKcppWith.setBounds(100, 100, 450, 360);
 		frmMmKcppWith.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -97,6 +105,10 @@ public class MainWindow {
 		mntmOpenFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				FileChooserHelper.openFile(frmMmKcppWith);
+				nVehicles.setText(Integer.toString(PresetSolution.graph.getPathes().size()));
+				nVertexes.setText(Integer.toString(PresetSolution.graph.getVertexes().size()));
+				nArcs.setText(Integer.toString(PresetSolution.graph.getArcs().size()));
+				presetMaxCost.setText(Long.toString(PresetSolution.maxPathCost));
 			}
 		});
 		mntmOpenFile.setIcon(new ImageIcon(MainWindow.class.getResource("/com/sun/java/swing/plaf/windows/icons/Directory.gif")));
@@ -106,6 +118,9 @@ public class MainWindow {
 		mntmGenerateGraph.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Utils.showGenerateGraphDialog();
+				nVehicles.setText(Integer.toString(PresetSolution.graph.getPathes().size()));
+				nVertexes.setText(Integer.toString(PresetSolution.graph.getVertexes().size()));
+				presetMaxCost.setText(Long.toString(PresetSolution.maxPathCost));
 			}
 		});
 		mnFile.add(mntmGenerateGraph);
@@ -164,18 +179,17 @@ public class MainWindow {
 		gbc_label.gridy = 0;
 		Input.add(label, gbc_label);
 		
-		textField = new JTextField();
-		textField.setText("0");
-		textField.setEditable(false);
-		textField.setColumns(10);
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.fill = GridBagConstraints.BOTH;
-		gbc_textField.insets = new Insets(0, 0, 5, 0);
-		gbc_textField.gridx = 1;
-		gbc_textField.gridy = 0;
-		Input.add(textField, gbc_textField);
+		nVehicles.setText("0");
+		nVehicles.setEditable(false);
+		nVehicles.setColumns(10);
+		GridBagConstraints gbc_nVehicles = new GridBagConstraints();
+		gbc_nVehicles.fill = GridBagConstraints.BOTH;
+		gbc_nVehicles.insets = new Insets(0, 0, 5, 0);
+		gbc_nVehicles.gridx = 1;
+		gbc_nVehicles.gridy = 0;
+		Input.add(nVehicles, gbc_nVehicles);
 		
-		JLabel label_1 = new JLabel("Number of vetexes:");
+		JLabel label_1 = new JLabel("Number of vertexes:");
 		GridBagConstraints gbc_label_1 = new GridBagConstraints();
 		gbc_label_1.fill = GridBagConstraints.BOTH;
 		gbc_label_1.insets = new Insets(0, 0, 5, 5);
@@ -183,16 +197,15 @@ public class MainWindow {
 		gbc_label_1.gridy = 1;
 		Input.add(label_1, gbc_label_1);
 		
-		textField_1 = new JTextField();
-		textField_1.setText("0");
-		textField_1.setEditable(false);
-		textField_1.setColumns(10);
-		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.fill = GridBagConstraints.BOTH;
-		gbc_textField_1.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_1.gridx = 1;
-		gbc_textField_1.gridy = 1;
-		Input.add(textField_1, gbc_textField_1);
+		nVertexes.setText("0");
+		nVertexes.setEditable(false);
+		nVertexes.setColumns(10);
+		GridBagConstraints gbc_nVertexes = new GridBagConstraints();
+		gbc_nVertexes.fill = GridBagConstraints.BOTH;
+		gbc_nVertexes.insets = new Insets(0, 0, 5, 0);
+		gbc_nVertexes.gridx = 1;
+		gbc_nVertexes.gridy = 1;
+		Input.add(nVertexes, gbc_nVertexes);
 		
 		JLabel label_2 = new JLabel("Number of arcs:");
 		GridBagConstraints gbc_label_2 = new GridBagConstraints();
@@ -202,16 +215,15 @@ public class MainWindow {
 		gbc_label_2.gridy = 2;
 		Input.add(label_2, gbc_label_2);
 		
-		textField_2 = new JTextField();
-		textField_2.setText("0");
-		textField_2.setEditable(false);
-		textField_2.setColumns(10);
-		GridBagConstraints gbc_textField_2 = new GridBagConstraints();
-		gbc_textField_2.fill = GridBagConstraints.BOTH;
-		gbc_textField_2.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_2.gridx = 1;
-		gbc_textField_2.gridy = 2;
-		Input.add(textField_2, gbc_textField_2);
+		nArcs.setText("0");
+		nArcs.setEditable(false);
+		nArcs.setColumns(10);
+		GridBagConstraints gbc_nArcs = new GridBagConstraints();
+		gbc_nArcs.fill = GridBagConstraints.BOTH;
+		gbc_nArcs.insets = new Insets(0, 0, 5, 0);
+		gbc_nArcs.gridx = 1;
+		gbc_nArcs.gridy = 2;
+		Input.add(nArcs, gbc_nArcs);
 		
 		JButton button = new JButton("Details");
 		button.addActionListener(new ActionListener() {
@@ -290,16 +302,16 @@ public class MainWindow {
 		gbc_lblMaximumRouteCost.gridy = 1;
 		Result.add(lblMaximumRouteCost, gbc_lblMaximumRouteCost);
 		
-		textField_3 = new JTextField();
-		textField_3.setEditable(false);
-		textField_3.setText("0");
-		GridBagConstraints gbc_textField_3 = new GridBagConstraints();
-		gbc_textField_3.fill = GridBagConstraints.BOTH;
-		gbc_textField_3.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_3.gridx = 1;
-		gbc_textField_3.gridy = 1;
-		Result.add(textField_3, gbc_textField_3);
-		textField_3.setColumns(10);
+		maxCost = new JTextField();
+		maxCost.setEditable(false);
+		maxCost.setText("0");
+		GridBagConstraints gbc_maxCost = new GridBagConstraints();
+		gbc_maxCost.fill = GridBagConstraints.BOTH;
+		gbc_maxCost.insets = new Insets(0, 0, 5, 0);
+		gbc_maxCost.gridx = 1;
+		gbc_maxCost.gridy = 1;
+		Result.add(maxCost, gbc_maxCost);
+		maxCost.setColumns(10);
 		
 		JLabel lblExpectedMaxCost = new JLabel("Expected max cost:");
 		GridBagConstraints gbc_lblExpectedMaxCost = new GridBagConstraints();
@@ -309,16 +321,15 @@ public class MainWindow {
 		gbc_lblExpectedMaxCost.gridy = 2;
 		Result.add(lblExpectedMaxCost, gbc_lblExpectedMaxCost);
 		
-		textField_4 = new JTextField();
-		textField_4.setEditable(false);
-		textField_4.setText("0");
-		GridBagConstraints gbc_textField_4 = new GridBagConstraints();
-		gbc_textField_4.fill = GridBagConstraints.BOTH;
-		gbc_textField_4.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_4.gridx = 1;
-		gbc_textField_4.gridy = 2;
-		Result.add(textField_4, gbc_textField_4);
-		textField_4.setColumns(10);
+		presetMaxCost.setEditable(false);
+		presetMaxCost.setText("0");
+		GridBagConstraints gbc_presetMaxCost = new GridBagConstraints();
+		gbc_presetMaxCost.fill = GridBagConstraints.BOTH;
+		gbc_presetMaxCost.insets = new Insets(0, 0, 5, 0);
+		gbc_presetMaxCost.gridx = 1;
+		gbc_presetMaxCost.gridy = 2;
+		Result.add(presetMaxCost, gbc_presetMaxCost);
+		presetMaxCost.setColumns(10);
 		
 		JButton btnDetails = new JButton("Details");
 		btnDetails.addActionListener(new ActionListener() {

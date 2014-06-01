@@ -123,6 +123,10 @@ public class Reader {
 		    	}
 		    	PresetSolution.graph.getPathes().add(path);
 		    	System.out.println(path);
+		    	//update max cost of path
+		    	if (path.getCost() > PresetSolution.maxPathCost) {
+		    		PresetSolution.maxPathCost = path.getCost();
+		    	}
 		    }
 		}
 	}
