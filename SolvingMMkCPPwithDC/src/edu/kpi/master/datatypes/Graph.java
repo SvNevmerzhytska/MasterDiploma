@@ -1,24 +1,25 @@
 package edu.kpi.master.datatypes;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class Graph {
 	
-	private Set<Arc> arcs;
-	private Set<Vertex> vertexes;
+	private HashSet<Arc> arcs = new HashSet<Arc>();
+	private HashSet<Vertex> vertexes = new HashSet<Vertex>();
 	private Vertex depo;
-	private Set<Path> pathes;
+	private Set<Path> pathes = new HashSet<Path>();
 	
 	public Set<Arc> getArcs() {
 		return arcs;
 	}
-	public void setArcs(Set<Arc> arcs) {
+	public void setArcs(HashSet<Arc> arcs) {
 		this.arcs = arcs;
 	}
 	public Set<Vertex> getVertexes() {
 		return vertexes;
 	}
-	public void setVertexes(Set<Vertex> vertexes) {
+	public void setVertexes(HashSet<Vertex> vertexes) {
 		this.vertexes = vertexes;
 	}
 	public Vertex getDepo() {

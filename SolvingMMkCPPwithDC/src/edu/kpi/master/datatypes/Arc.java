@@ -12,18 +12,43 @@ public class Arc {
 	//deadline - serviceTime
 	private int reserve;
 	
+	@Override
+	public boolean equals(Object obj) {
+		if(this == obj) {
+			return true;
+		}
+		if(! (obj instanceof Arc)){
+			return false;
+		}
+		if(this.beginNode.equals(((Arc) obj).beginNode)
+				&& this.endNode.equals(((Arc) obj).endNode)) {
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public String toString() {
+		return "Arc = { " + beginNode.getName() + "->" + endNode.getName()
+				+ ", serviceCost:" + serviceCost + ", transitCost:" + transitCost
+				+ ", deadline:" + deadline + " }";
+	}
 	
 	public Vertex getBeginNode() {
 		return beginNode;
 	}
 	public void setBeginNode(Vertex beginNode) {
 		this.beginNode = beginNode;
+		beginNode.getOutArcs().add(this);
+		beginNode.getIncidentArcs().add(this);
 	}
 	public Vertex getEndNode() {
 		return endNode;
 	}
 	public void setEndNode(Vertex endNode) {
 		this.endNode = endNode;
+		endNode.getInArcs().add(this);
+		endNode.getIncidentArcs().add(this);
 	}
 	public int getServiceCost() {
 		return serviceCost;

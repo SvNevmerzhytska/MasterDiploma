@@ -10,6 +10,8 @@ import java.util.Date;
 
 import javax.swing.JFileChooser;
 
+import edu.kpi.master.io.Reader;
+
 public class FileChooserHelper {
 	final static JFileChooser fc = new JFileChooser();
 	
@@ -23,6 +25,7 @@ public class FileChooserHelper {
 		//action on Open
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fc.getSelectedFile();
+            Reader.readDataFromFile(file);
         }
 	}
 	

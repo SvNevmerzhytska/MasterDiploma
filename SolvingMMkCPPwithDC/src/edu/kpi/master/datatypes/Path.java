@@ -4,23 +4,39 @@ import java.util.LinkedList;
 
 public class Path {
 	
-	private int pathNumber;
-	private LinkedList<Arc> arcs;
-
-	public int getPathNumber() {
-		return pathNumber;
+	private LinkedList<PathArc> pathArcs = new LinkedList<PathArc>();
+	private long cost;
+	
+	@Override
+	public String toString() {
+		String description = "Path = { cost:" + cost;
+		for(PathArc pathArc : pathArcs){
+			description = description + ", " + pathArc.arc.getBeginNode().getName() + "->"
+					+ pathArc.arc.getEndNode().getName();
+		}
+		description = description + " }";
+		return description;
 	}
 
-	public void setPathNumber(int pathNumber) {
-		this.pathNumber = pathNumber;
+	public LinkedList<PathArc> getPathArcs() {
+		return pathArcs;
 	}
 
-	public LinkedList<Arc> getArcs() {
-		return arcs;
+	public void setPathArcs(LinkedList<PathArc> pathArcs) {
+		this.pathArcs = pathArcs;
 	}
 
-	public void setArcs(LinkedList<Arc> arcs) {
-		this.arcs = arcs;
+	public long getCost() {
+		return cost;
 	}
 
+	public void setCost(long cost) {
+		this.cost = cost;
+	}
+
+	public class PathArc {
+		public Arc arc;
+		public boolean servicing = false;
+		
+	}
 }
