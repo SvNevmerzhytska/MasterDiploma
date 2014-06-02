@@ -21,6 +21,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
 
+import edu.kpi.master.algorithm.PresetSolution;
+import edu.kpi.master.datatypes.Arc;
 import edu.kpi.master.gui.helper.Utils;
 
 import java.awt.event.ActionListener;
@@ -181,4 +183,22 @@ public class ViewInputDetailsDialog extends JDialog {
 		}
 	}
 
+	public void updateData() {
+		tfVehicles.setText(Integer.toString(PresetSolution.graph.getPathes().size()));
+		tfVertexes.setText(Integer.toString(PresetSolution.graph.getVertexes().size()));
+		tfArcs.setText(Integer.toString(PresetSolution.graph.getArcs().size()));
+		//fill table
+		DefaultTableModel dtm = new DefaultTableModel();
+		dtm.setColumnIdentifiers(new String[] {
+				"Arc", "Service Cost", "Transit Cost"
+			});
+		for(Arc arc : PresetSolution.graph.getArcs()) {
+			Object[] rowData = new Object[3];
+			rowData[0] = arc.getName();
+			rowData[1] = arc.getServiceCost();
+			rowData[2] = arc.getTransitCost();
+			dtm.addRow(rowData);
+		}
+		table.setModel(dtm);
+	}
 }

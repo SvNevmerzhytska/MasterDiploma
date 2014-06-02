@@ -12,6 +12,10 @@ public class Arc {
 	//deadline - serviceTime
 	private int reserve;
 	
+	public String getName(){
+		return beginNode.getName() + "->" + endNode.getName();
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if(this == obj) {

@@ -51,7 +51,6 @@ public class Reader {
 		    	Vertex vertex = new Vertex(name);
 		    	PresetSolution.graph.getVertexes().add(vertex);
 		    	names.add(name);
-		    	System.out.println(vertex);
 		    }
 		}
 		//find the vertex with the smallest name and set it as depot
@@ -59,7 +58,6 @@ public class Reader {
 		for(Vertex vertex : PresetSolution.graph.getVertexes()){
 			if (vertex.getName().equals(names.get(0))) {
 				PresetSolution.graph.setDepo(vertex);
-				System.out.println("Depo " + vertex);
 				break;
 			}
 		}
@@ -91,7 +89,6 @@ public class Reader {
 		    	arc.setTransitCost(Integer.parseInt(arcElement.getAttribute("transitCost")));
 		    	arc.setDeadline(Integer.parseInt(arcElement.getAttribute("deadline")));
 		    	PresetSolution.graph.getArcs().add(arc);
-		    	System.out.println(arc);
 		    }
 		}
 	}
@@ -122,7 +119,6 @@ public class Reader {
 		    		path.getPathArcs().add(arcEntry);
 		    	}
 		    	PresetSolution.graph.getPathes().add(path);
-		    	System.out.println(path);
 		    	//update max cost of path
 		    	if (path.getCost() > PresetSolution.maxPathCost) {
 		    		PresetSolution.maxPathCost = path.getCost();

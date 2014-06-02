@@ -84,13 +84,6 @@ public class MainWindow {
 	 */
 	private void initialize() {
 		frmMmKcppWith = new JFrame();
-		
-		//initial data
-		nVehicles = new JTextField();
-		nVertexes = new JTextField();
-		nArcs = new JTextField();
-		presetMaxCost = new JTextField();
-		
 		frmMmKcppWith.setTitle("MM k-CPP with DC");
 		frmMmKcppWith.setBounds(100, 100, 450, 360);
 		frmMmKcppWith.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -120,6 +113,7 @@ public class MainWindow {
 				Utils.showGenerateGraphDialog();
 				nVehicles.setText(Integer.toString(PresetSolution.graph.getPathes().size()));
 				nVertexes.setText(Integer.toString(PresetSolution.graph.getVertexes().size()));
+				nArcs.setText(Integer.toString(PresetSolution.graph.getArcs().size()));
 				presetMaxCost.setText(Long.toString(PresetSolution.maxPathCost));
 			}
 		});
@@ -179,6 +173,7 @@ public class MainWindow {
 		gbc_label.gridy = 0;
 		Input.add(label, gbc_label);
 		
+		nVehicles = new JTextField();
 		nVehicles.setText("0");
 		nVehicles.setEditable(false);
 		nVehicles.setColumns(10);
@@ -197,6 +192,7 @@ public class MainWindow {
 		gbc_label_1.gridy = 1;
 		Input.add(label_1, gbc_label_1);
 		
+		nVertexes = new JTextField();
 		nVertexes.setText("0");
 		nVertexes.setEditable(false);
 		nVertexes.setColumns(10);
@@ -215,6 +211,7 @@ public class MainWindow {
 		gbc_label_2.gridy = 2;
 		Input.add(label_2, gbc_label_2);
 		
+		nArcs = new JTextField();
 		nArcs.setText("0");
 		nArcs.setEditable(false);
 		nArcs.setColumns(10);
@@ -229,6 +226,7 @@ public class MainWindow {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Utils.showInputDetailsDialog();
+				Utils.viewInputDataDetails.updateData();
 			}
 		});
 		button.setIcon(new ImageIcon(MainWindow.class.getResource("/images/info.png")));
@@ -321,6 +319,7 @@ public class MainWindow {
 		gbc_lblExpectedMaxCost.gridy = 2;
 		Result.add(lblExpectedMaxCost, gbc_lblExpectedMaxCost);
 		
+		presetMaxCost = new JTextField();
 		presetMaxCost.setEditable(false);
 		presetMaxCost.setText("0");
 		GridBagConstraints gbc_presetMaxCost = new GridBagConstraints();
