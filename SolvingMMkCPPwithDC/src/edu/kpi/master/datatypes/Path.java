@@ -17,6 +17,17 @@ public class Path {
 		description = description + " }";
 		return description;
 	}
+	
+	public String getArcChain(){
+		String result = "";
+		for(PathArc pathArc : pathArcs) {
+			if (!result.isEmpty()) {
+				result = result + ", ";
+			}
+			result = result + pathArc.arc.getName();
+		}
+		return result;
+	}
 
 	public LinkedList<PathArc> getPathArcs() {
 		return pathArcs;

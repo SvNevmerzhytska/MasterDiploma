@@ -157,6 +157,7 @@ public class GenerateGraphDialog extends JDialog {
 				btnDetails.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						Utils.showGeneratedDataDialog();
+						Utils.viewGeneratedDataDetails.updateData();
 					}
 				});
 				btnDetails.setIcon(new ImageIcon(GenerateGraphDialog.class.getResource("/images/info.png")));

@@ -26,6 +26,9 @@ import java.awt.Insets;
 
 import javax.swing.ImageIcon;
 
+import edu.kpi.master.algorithm.PresetSolution;
+import edu.kpi.master.datatypes.Arc;
+import edu.kpi.master.datatypes.Path;
 import edu.kpi.master.gui.helper.Utils;
 
 import java.awt.event.ActionListener;
@@ -176,5 +179,35 @@ public class ViewGeneratedDataDetailsDialog extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+	}
+	
+	public void updateData(){
+		//fill table with arcs
+		DefaultTableModel dtm = new DefaultTableModel();
+		dtm.setColumnIdentifiers(new String[] {
+				"Arc", "Service Cost", "Transit Cost"
+			});
+		for(Arc arc : PresetSolution.graph.getArcs()) {
+			Object[] rowData = new Object[3];
+			rowData[0] = arc.getName();
+			rowData[1] = arc.getServiceCost();
+			rowData[2] = arc.getTransitCost();
+			dtm.addRow(rowData);
+		}
+		tblGeneratedArcs.setModel(dtm);
+		//max cost
+		maxCost.setText(Long.toString(PresetSolution.maxPathCost));
+		//fill table with arcs
+		dtm = new DefaultTableModel();
+		dtm.setColumnIdentifiers(new String[] {
+				"Rout", "Cost"
+			});
+		for(Path path : PresetSolution.graph.getPathes()) {
+			Object[] rowData = new Object[3];
+			rowData[0] = path.getArcChain();
+			rowData[1] = path.getCost();
+			dtm.addRow(rowData);
+		}
+		tblGeneratedRoutes.setModel(dtm);
 	}
 }
