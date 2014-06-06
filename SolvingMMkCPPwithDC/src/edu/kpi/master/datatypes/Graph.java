@@ -10,13 +10,13 @@ public class Graph {
 	private Vertex depo;
 	private Set<Path> pathes = new HashSet<Path>();
 	
-	public Set<Arc> getArcs() {
+	public HashSet<Arc> getArcs() {
 		return arcs;
 	}
 	public void setArcs(HashSet<Arc> arcs) {
 		this.arcs = arcs;
 	}
-	public Set<Vertex> getVertexes() {
+	public HashSet<Vertex> getVertexes() {
 		return vertexes;
 	}
 	public void setVertexes(HashSet<Vertex> vertexes) {

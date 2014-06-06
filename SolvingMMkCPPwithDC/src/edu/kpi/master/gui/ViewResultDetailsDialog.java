@@ -13,8 +13,6 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.ImageIcon;
 
-import java.awt.GridLayout;
-
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JTextField;

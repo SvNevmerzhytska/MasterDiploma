@@ -5,6 +5,7 @@ import java.io.File;
 import javax.swing.JDialog;
 
 import edu.kpi.master.gui.GenerateGraphDialog;
+import edu.kpi.master.gui.MainWindow;
 import edu.kpi.master.gui.ViewGeneratedDataDetailsDialog;
 import edu.kpi.master.gui.ViewInputDetailsDialog;
 import edu.kpi.master.gui.ViewResultDetailsDialog;
@@ -12,11 +13,12 @@ import edu.kpi.master.gui.ViewResultDetailsDialog;
 public class Utils {
 	public final static String xml = "xml";
 	
+	public final static MainWindow window = new MainWindow();
 	public final static GenerateGraphDialog generateGraphDialog = new GenerateGraphDialog();
 	public final static ViewInputDetailsDialog viewInputDataDetails = new ViewInputDetailsDialog();
 	public final static ViewResultDetailsDialog viewResultDetails = new ViewResultDetailsDialog();
 	public final static ViewGeneratedDataDetailsDialog viewGeneratedDataDetails = new ViewGeneratedDataDetailsDialog();
-
+	
     /*
      * Get the extension of a file.
      */  

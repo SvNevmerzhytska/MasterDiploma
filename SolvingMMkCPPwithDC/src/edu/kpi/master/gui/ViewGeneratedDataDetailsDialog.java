@@ -10,13 +10,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.ListSelectionModel;
 import javax.swing.JScrollPane;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
-
-import java.awt.GridLayout;
 
 import javax.swing.JTextField;
 

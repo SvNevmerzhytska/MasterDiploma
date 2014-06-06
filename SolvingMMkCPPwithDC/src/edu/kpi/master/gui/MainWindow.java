@@ -2,7 +2,6 @@ package edu.kpi.master.gui;
 
 import java.awt.EventQueue;
 
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -16,33 +15,22 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import java.awt.Panel;
-
-import javax.swing.JToolBar;
-import javax.swing.JScrollPane;
-
-import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
 import javax.swing.JTextField;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.CompoundBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.filechooser.FileFilter;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.JProgressBar;
 import javax.swing.UIManager;
 
+import edu.kpi.master.algorithm.FeasibleSolution;
 import edu.kpi.master.algorithm.PresetSolution;
 import edu.kpi.master.gui.helper.FileChooserHelper;
 import edu.kpi.master.gui.helper.Utils;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.File;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -55,6 +43,7 @@ public class MainWindow {
 	private JTextField computationTime;
 	private JTextField maxCost;
 	private JTextField presetMaxCost;
+	private JProgressBar progressBar;
 
 	/**
 	 * Launch the application.
@@ -63,7 +52,7 @@ public class MainWindow {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainWindow window = new MainWindow();
+					MainWindow window = Utils.window;
 					window.frmMmKcppWith.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -247,6 +236,11 @@ public class MainWindow {
 		Run.setLayout(gbl_Run);
 		
 		JButton btnRun = new JButton("Run");
+		btnRun.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FeasibleSolution.findFeasibleSolution();
+			}
+		});
 		btnRun.setIcon(new ImageIcon(MainWindow.class.getResource("/images/arrow_right.png")));
 		GridBagConstraints gbc_btnRun = new GridBagConstraints();
 		gbc_btnRun.fill = GridBagConstraints.HORIZONTAL;
@@ -256,12 +250,13 @@ public class MainWindow {
 		gbc_btnRun.gridy = 0;
 		Run.add(btnRun, gbc_btnRun);
 		
-		JProgressBar progressBar = new JProgressBar();
+		progressBar = new JProgressBar();
 		GridBagConstraints gbc_progressBar = new GridBagConstraints();
 		gbc_progressBar.anchor = GridBagConstraints.WEST;
 		gbc_progressBar.gridx = 2;
 		gbc_progressBar.gridy = 0;
 		Run.add(progressBar, gbc_progressBar);
+		progressBar.setMaximum(4);
 		
 		JPanel Result = new JPanel();
 		Result.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Result", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -344,4 +339,7 @@ public class MainWindow {
 		Result.add(btnDetails, gbc_btnDetails);
 	}
 
+	public JProgressBar getProgressBar() {
+		return progressBar;
+	}
 }

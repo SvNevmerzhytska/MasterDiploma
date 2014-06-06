@@ -17,7 +17,6 @@ import javax.swing.JTextField;
 import edu.kpi.master.gui.helper.FileChooserHelper;
 import edu.kpi.master.gui.helper.Utils;
 
-import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;

@@ -9,13 +9,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.GridLayout;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
