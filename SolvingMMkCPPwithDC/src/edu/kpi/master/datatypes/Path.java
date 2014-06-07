@@ -42,6 +42,9 @@ public class Path {
 				result = result + ", ";
 			}
 			result = result + pathArc.arc.getName();
+			if(pathArc.servicing) {
+				result = result + "(s)";
+			}
 		}
 		return result;
 	}

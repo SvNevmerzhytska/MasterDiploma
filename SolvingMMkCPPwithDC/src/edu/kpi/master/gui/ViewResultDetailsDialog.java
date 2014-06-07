@@ -12,13 +12,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import javax.swing.ImageIcon;
-
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import edu.kpi.master.algorithm.FeasibleSolution;
+import edu.kpi.master.datatypes.Path;
 import edu.kpi.master.gui.helper.Utils;
 
 import java.awt.GridBagLayout;
@@ -29,7 +30,7 @@ public class ViewResultDetailsDialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField tfCompTime;
-	private JTextField ftMaxCost;
+	private JTextField tfMaxCost;
 	private JTable table;
 
 	/**
@@ -104,14 +105,14 @@ public class ViewResultDetailsDialog extends JDialog {
 				panel.add(lblNewLabel_1, gbc_lblNewLabel_1);
 			}
 			{
-				ftMaxCost = new JTextField();
-				ftMaxCost.setEditable(false);
+				tfMaxCost = new JTextField();
+				tfMaxCost.setEditable(false);
 				GridBagConstraints gbc_ftMaxCost = new GridBagConstraints();
 				gbc_ftMaxCost.fill = GridBagConstraints.BOTH;
 				gbc_ftMaxCost.gridx = 1;
 				gbc_ftMaxCost.gridy = 1;
-				panel.add(ftMaxCost, gbc_ftMaxCost);
-				ftMaxCost.setColumns(10);
+				panel.add(tfMaxCost, gbc_ftMaxCost);
+				tfMaxCost.setColumns(10);
 			}
 		}
 		{
@@ -157,6 +158,25 @@ public class ViewResultDetailsDialog extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+	}
+	
+	public void updateData(){
+		
+		tfCompTime.setText(Long.toString(FeasibleSolution.computationTime));
+		tfMaxCost.setText(Long.toString(FeasibleSolution.maxCost));
+		//fill table
+		DefaultTableModel dtm = new DefaultTableModel();
+		dtm.setColumnIdentifiers(new String[] {
+				"Rout", "Cost"
+			});
+		for(Path path : FeasibleSolution.graph.getPathes()) {
+			Object[] rowData = new Object[2];
+			rowData[0] = path.getArcChain();
+			rowData[1] = path.getCost();
+			dtm.addRow(rowData);
+		}
+		table.setModel(dtm);
+		
 	}
 
 }

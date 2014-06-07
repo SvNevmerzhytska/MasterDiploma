@@ -16,8 +16,11 @@ public class FeasibleSolution {
 	public static Graph graph = new Graph();
 	private static boolean possibleToContinue = true;
 	private static Set<Path> simpleRouts;
+	public static long computationTime;
+	public static long maxCost;
 	
 	public static void findFeasibleSolution(){
+		computationTime = System.currentTimeMillis();
 		initialize();
 		if(possibleToContinue) {
 			step1();
@@ -33,8 +36,15 @@ public class FeasibleSolution {
 		}
 		if(possibleToContinue) {
 			step4();
-			Utils.window.getProgressBar().setValue(4);
 		}
+		maxCost = 0;
+		for(Path path : graph.getPathes()) {
+			if(path.getCost() > maxCost) {
+				maxCost = path.getCost();
+			}
+		}
+		computationTime = System.currentTimeMillis() - computationTime;
+		Utils.window.getProgressBar().setValue(4);
 	}
 	
 	//copy initial data from preset solution

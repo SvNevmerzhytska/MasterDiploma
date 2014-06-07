@@ -239,6 +239,8 @@ public class MainWindow {
 		btnRun.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FeasibleSolution.findFeasibleSolution();
+				computationTime.setText(Long.toString(FeasibleSolution.computationTime));
+				maxCost.setText(Long.toString(FeasibleSolution.maxCost));
 			}
 		});
 		btnRun.setIcon(new ImageIcon(MainWindow.class.getResource("/images/arrow_right.png")));
@@ -329,6 +331,7 @@ public class MainWindow {
 		btnDetails.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Utils.showResultDetailsDialog();
+				Utils.viewResultDetails.updateData();
 			}
 		});
 		btnDetails.setIcon(new ImageIcon(MainWindow.class.getResource("/images/info.png")));
