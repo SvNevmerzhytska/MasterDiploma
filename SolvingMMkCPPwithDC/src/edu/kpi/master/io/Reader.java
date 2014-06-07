@@ -14,6 +14,7 @@ import org.w3c.dom.NodeList;
 
 import edu.kpi.master.algorithm.PresetSolution;
 import edu.kpi.master.datatypes.Arc;
+import edu.kpi.master.datatypes.Graph;
 import edu.kpi.master.datatypes.Path;
 import edu.kpi.master.datatypes.Vertex;
 
@@ -25,6 +26,8 @@ public class Reader {
 			Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xmlFile);  
 			
 			doc.getDocumentElement().normalize();
+			
+			PresetSolution.graph = new Graph();
 			
 			//read vertexes from file
 			readVertexes(doc);

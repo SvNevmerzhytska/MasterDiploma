@@ -8,18 +8,21 @@ import javax.swing.JOptionPane;
 import edu.kpi.master.datatypes.Arc;
 import edu.kpi.master.datatypes.Graph;
 import edu.kpi.master.datatypes.Path;
+import edu.kpi.master.datatypes.Path.PathArc;
 import edu.kpi.master.datatypes.Vertex;
 import edu.kpi.master.gui.helper.Utils;
 
 public class FeasibleSolution {
 
-	public static Graph graph = new Graph();
+	public static Graph graph;
 	private static boolean possibleToContinue = true;
 	private static Set<Path> simpleRouts;
 	public static long computationTime;
 	public static long maxCost;
 	
 	public static void findFeasibleSolution(){
+		graph = new Graph();
+		possibleToContinue = true;
 		computationTime = System.currentTimeMillis();
 		initialize();
 		if(possibleToContinue) {
@@ -98,7 +101,7 @@ public class FeasibleSolution {
 			System.out.println(path);
 		}
 		//check stop condition
-		if(graph.getPathes().size() <= graph.getNVehicles()) {
+		if(simpleRouts.size() <= graph.getNVehicles()) {
 			System.out.println("Feasible solution was find on step 1.");
 			graph.setPathes(simpleRouts);
 			possibleToContinue = false;
@@ -109,7 +112,126 @@ public class FeasibleSolution {
 	
 	//step 2
 	public static void step2() {
-		
+		System.out.println("Step 2. Review simple routes...");
+		Set<Arc> arcsToView = graph.getArcs();
+		while (!arcsToView.isEmpty()) {
+			int minReserve = Integer.MAX_VALUE;
+			Arc currentArc = null;
+			Path currentPath = null;
+			//find arc with minimum reserve
+			for(Arc arc : arcsToView)  {
+				if (arc.getReserve() > 0 && arc.getReserve() < minReserve) {
+					minReserve = arc.getReserve();
+					currentArc = arc;
+				}
+			}
+			if(currentArc == null) {
+				break;
+			}
+			//find simple rout (if it is exist)
+			markFindSimple:
+			for(Path path : simpleRouts) {
+				for(PathArc pathArc : path.getPathArcs()) {
+					if(pathArc.servicing && pathArc.arc.equals(currentArc)) {
+						currentPath = path;
+						break markFindSimple;
+					}
+				}
+			}
+			if(currentPath != null) {
+				graph.getPathes().add(currentPath);
+				simpleRouts.remove(currentPath);
+			} else {
+				//find through not simple routes
+				markFind:
+				for(Path path : graph.getPathes()) {
+					for(PathArc pathArc : path.getPathArcs()) {
+						if(pathArc.servicing && pathArc.arc.equals(currentArc)) {
+							currentPath = path;
+							break markFind;
+						}
+					}
+				}
+			}
+			if(currentPath == null) {
+				System.out.println(currentArc);
+			}
+			//try to add transit arcs prior to current as serviced in current path
+			int index = 0;
+			for(PathArc pathArc : currentPath.getPathArcs()) {
+				if (pathArc.arc.equals(currentArc)) {
+					index = currentPath.getPathArcs().indexOf(pathArc);
+					break;
+				}
+			}
+			while(--index >= 0) {
+				PathArc tempArcPath = currentPath.getPathArcs().get(index);
+				//check that this arc is not serviced
+				boolean isServesed = false;
+				markCheckServicing:
+				for(Path path : graph.getPathes()) {
+					for(PathArc pathArc : path.getPathArcs()) {
+						if (pathArc.servicing && pathArc.arc.equals(tempArcPath.arc)) {
+							isServesed = true;
+							break markCheckServicing;
+						}
+					}
+				}
+				//try to add arc as serviced
+				if(!isServesed) {
+					int difference = tempArcPath.arc.getServiceCost() - tempArcPath.arc.getTransitCost();
+					//check that adding will be feasible
+					boolean isAllowed = true;
+					for(int i = index + 1; i < currentPath.getPathArcs().size(); i++) {
+						if(currentPath.getPathArcs().get(i).servicing 
+								&& difference > currentPath.getPathArcs().get(i).arc.getReserve()) {
+							isAllowed = false;
+							break;
+						}
+					}
+					//add arc as serviced
+					if(isAllowed) {
+						tempArcPath.servicing = true;
+						int serviceTime = 0;
+						//update service time (reserve updates automatically)
+						for(PathArc pathArc : currentPath.getPathArcs()) {
+							if(pathArc.servicing) {
+								serviceTime = serviceTime + pathArc.arc.getServiceCost();
+								pathArc.arc.setServiceTime(serviceTime);
+							} else {
+								serviceTime = serviceTime + pathArc.arc.getTransitCost();
+							}
+						}
+						currentPath.setCost(serviceTime);
+						//remove simple path
+						markRemove:
+						for(Path simplePath : simpleRouts) {
+							for(PathArc pathArc : simplePath.getPathArcs()) {
+								if(pathArc.servicing && pathArc.arc.equals(tempArcPath.arc)) {
+									simpleRouts.remove(simplePath);
+									break markRemove;
+								}
+							}
+						}
+					}
+				}
+			}
+			arcsToView.remove(currentArc);
+			//check stop condition
+			if (graph.getPathes().size() + simpleRouts.size() <= graph.getNVehicles()) {
+				System.out.println("Feasible solution was find on step 2.");
+				possibleToContinue = false;
+				break;
+			}
+		}
+		if(!simpleRouts.isEmpty()) {
+			graph.getPathes().addAll(simpleRouts);
+			simpleRouts = null;
+		}
+		for(Path path : graph.getPathes()) {
+			System.out.println(path);
+		}
+		System.out.println();
 	}
 	
 	//step 3

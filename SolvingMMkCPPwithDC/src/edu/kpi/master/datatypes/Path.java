@@ -16,14 +16,12 @@ public class Path {
 			return false;
 		}
 		Path path = (Path) obj;
-		if(this.cost != path.cost) {
-			return false;
-		}
 		if(this.pathArcs.size() != path.pathArcs.size()) {
 			return false;
 		}
 		for(int i = 0; i < this.pathArcs.size(); i++) {
-			if(!this.pathArcs.get(i).arc.equals(path.pathArcs.get(i).arc)) {
+			if(!(this.pathArcs.get(i).arc.equals(path.pathArcs.get(i).arc) 
+					&& this.pathArcs.get(i).servicing == path.pathArcs.get(i).servicing)) {
 				return false;
 			}
 		}
