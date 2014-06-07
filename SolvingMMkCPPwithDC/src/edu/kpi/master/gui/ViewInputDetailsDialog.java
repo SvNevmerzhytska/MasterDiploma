@@ -182,7 +182,7 @@ public class ViewInputDetailsDialog extends JDialog {
 	}
 
 	public void updateData() {
-		tfVehicles.setText(Integer.toString(PresetSolution.graph.getPathes().size()));
+		tfVehicles.setText(Integer.toString(PresetSolution.graph.getNVehicles()));
 		tfVertexes.setText(Integer.toString(PresetSolution.graph.getVertexes().size()));
 		tfArcs.setText(Integer.toString(PresetSolution.graph.getArcs().size()));
 		//fill table

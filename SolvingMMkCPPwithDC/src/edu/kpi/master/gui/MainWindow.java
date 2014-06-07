@@ -100,7 +100,7 @@ public class MainWindow {
 		mntmGenerateGraph.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Utils.showGenerateGraphDialog();
-				nVehicles.setText(Integer.toString(PresetSolution.graph.getPathes().size()));
+				nVehicles.setText(Integer.toString(PresetSolution.graph.getNVehicles()));
 				nVertexes.setText(Integer.toString(PresetSolution.graph.getVertexes().size()));
 				nArcs.setText(Integer.toString(PresetSolution.graph.getArcs().size()));
 				presetMaxCost.setText(Long.toString(PresetSolution.maxPathCost));

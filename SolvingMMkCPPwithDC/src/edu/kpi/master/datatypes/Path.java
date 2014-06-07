@@ -8,14 +8,31 @@ public class Path {
 	private long cost;
 	
 	@Override
-	public String toString() {
-		String description = "Path = { cost:" + cost;
-		for(PathArc pathArc : pathArcs){
-			description = description + ", " + pathArc.arc.getBeginNode().getName() + "->"
-					+ pathArc.arc.getEndNode().getName();
+	public boolean equals(Object obj) {
+		if(this == obj) {
+			return true;
 		}
-		description = description + " }";
-		return description;
+		if(! (obj instanceof Path)){
+			return false;
+		}
+		Path path = (Path) obj;
+		if(this.cost != path.cost) {
+			return false;
+		}
+		if(this.pathArcs.size() != path.pathArcs.size()) {
+			return false;
+		}
+		for(int i = 0; i < this.pathArcs.size(); i++) {
+			if(!this.pathArcs.get(i).arc.equals(path.pathArcs.get(i).arc)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	@Override
+	public String toString() {
+		return "Path = { cost:" + cost + " chain: " + getArcChain() + " }";
 	}
 	
 	public String getArcChain(){

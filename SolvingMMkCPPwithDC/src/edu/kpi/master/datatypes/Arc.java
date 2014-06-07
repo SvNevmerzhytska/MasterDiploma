@@ -77,6 +77,7 @@ public class Arc {
 	}
 	public void setServiceTime(int serviceTime) {
 		this.serviceTime = serviceTime;
+		this.reserve = this.deadline - this.serviceTime;
 	}
 	public int getReserve() {
 		return reserve;
@@ -85,5 +86,4 @@ public class Arc {
 		this.reserve = reserve;
 	}
 	
-
 }

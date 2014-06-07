@@ -9,6 +9,7 @@ public class Graph {
 	private HashSet<Vertex> vertexes = new HashSet<Vertex>();
 	private Vertex depo;
 	private Set<Path> pathes = new HashSet<Path>();
+	private int nVehicles;
 	
 	public HashSet<Arc> getArcs() {
 		return arcs;
@@ -33,6 +34,12 @@ public class Graph {
 	}
 	public void setPathes(Set<Path> pathes) {
 		this.pathes = pathes;
+	}
+	public int getNVehicles() {
+		return nVehicles;
+	}
+	public void setNVehicles(int nVehicles) {
+		this.nVehicles = nVehicles;
 	}
 	
 }

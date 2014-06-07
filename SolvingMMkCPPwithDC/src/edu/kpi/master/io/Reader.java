@@ -125,5 +125,6 @@ public class Reader {
 		    	}
 		    }
 		}
+		PresetSolution.graph.setNVehicles(PresetSolution.graph.getPathes().size());
 	}
 }
