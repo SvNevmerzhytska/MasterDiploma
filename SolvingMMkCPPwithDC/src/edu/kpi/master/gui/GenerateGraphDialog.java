@@ -12,8 +12,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import edu.kpi.master.generator.Generator;
 import edu.kpi.master.gui.helper.FileChooserHelper;
 import edu.kpi.master.gui.helper.Utils;
 
@@ -146,6 +148,19 @@ public class GenerateGraphDialog extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("Generate");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						try {
+							Generator.nVehicles = Integer.parseInt(nVehicles.getText());
+							Generator.nVertexes = Integer.parseInt(nVertexes.getText());
+							Generator.nArcs = Integer.parseInt(nArcs.getText());
+							Generator.generateData();
+						}
+						catch (NumberFormatException ex) {
+							JOptionPane.showMessageDialog(null, "Enter valid numbers into text fields.", "Warning", JOptionPane.WARNING_MESSAGE);
+						}
+					}
+				});
 				okButton.setIcon(new ImageIcon(GenerateGraphDialog.class.getResource("/images/arrow_right.png")));
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
@@ -192,6 +207,10 @@ public class GenerateGraphDialog extends JDialog {
 				}
 			}
 		}
+	}
+	
+	public void updateData() {
+		
 	}
 
 }
