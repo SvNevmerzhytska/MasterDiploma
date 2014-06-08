@@ -1,5 +1,8 @@
 package edu.kpi.master.algorithm;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,11 +17,19 @@ import edu.kpi.master.gui.helper.Utils;
 
 public class FeasibleSolution {
 
-	public static Graph graph;
-	private static boolean possibleToContinue = true;
-	private static Set<Path> simpleRouts;
+	public static Graph graph = new Graph();
 	public static long computationTime;
 	public static long maxCost;
+	
+	private static boolean possibleToContinue = true;
+	private static Set<Path> simpleRouts;
+	
+	private static Comparator<Path> pathComparator = new Comparator<Path>() {
+		@Override
+		public int compare(Path arg0, Path arg1) {
+			return (int) (arg1.getCost() - arg0.getCost());
+		}
+	};
 	
 	public static void findFeasibleSolution(){
 		graph = new Graph();
@@ -102,7 +113,7 @@ public class FeasibleSolution {
 		}
 		//check stop condition
 		if(simpleRouts.size() <= graph.getNVehicles()) {
-			System.out.println("Feasible solution was find on step 1.");
+			System.out.println("Feasible solution was found on step 1.");
 			graph.setPathes(simpleRouts);
 			possibleToContinue = false;
 			return;
@@ -219,7 +230,7 @@ public class FeasibleSolution {
 			arcsToView.remove(currentArc);
 			//check stop condition
 			if (graph.getPathes().size() + simpleRouts.size() <= graph.getNVehicles()) {
-				System.out.println("Feasible solution was find on step 2.");
+				System.out.println("Feasible solution was found on step 2.");
 				possibleToContinue = false;
 				break;
 			}
@@ -236,7 +247,102 @@ public class FeasibleSolution {
 	
 	//step 3
 	public static void step3() {
-		
+		System.out.println("Step 3. Merge identical routes...");
+		//sort routes by its cost
+		ArrayList<Path> sortedPathes = new ArrayList<Path>(graph.getPathes());
+		Collections.sort(sortedPathes, pathComparator);
+		for(int i = sortedPathes.size() - 1; i >= 0; i--) {
+			Path currentPath = sortedPathes.get(i);
+			Path priorPath = null;
+			//check bigger paths for similarity
+			for(int j = i - 1; j >= 0; j--) {
+				//arcs in prior path
+				HashSet<Arc> arcsInPriorPath = new HashSet<Arc>();
+				for(PathArc pathArc : sortedPathes.get(j).getPathArcs()){
+					arcsInPriorPath.add(pathArc.arc);
+				}
+				//arcs in current path
+				HashSet<Arc> arcsInCurrentPath = new HashSet<Arc>();
+				for(PathArc pathArc : currentPath.getPathArcs()) {
+					arcsInCurrentPath.add(pathArc.arc);
+				}
+				if (arcsInPriorPath.containsAll(arcsInCurrentPath)) {
+					priorPath = sortedPathes.get(j);
+					break;
+				}
+			}
+			//update servicing marks in prior path
+			if (priorPath != null) {
+				for(PathArc pathArc : currentPath.getPathArcs()) {
+					if (pathArc.servicing) {
+						for (PathArc pathArc2 : priorPath.getPathArcs()) {
+							if (pathArc2.arc.equals(pathArc.arc)) {
+								pathArc2.servicing = true;
+								break;
+							}
+						}
+					}
+				}
+				//update parameters in prior path
+				int serviceTime = 0;
+				boolean needToRestore = false;
+				//update service time (reserve updates automatically)
+				for(PathArc pathArc : priorPath.getPathArcs()) {
+					if(pathArc.servicing) {
+						serviceTime = serviceTime + pathArc.arc.getServiceCost();
+						if (serviceTime > pathArc.arc.getDeadline()) {
+							needToRestore = true;
+							break;
+						} else {
+							pathArc.arc.setServiceTime(serviceTime);
+						}
+					} else {
+						serviceTime = serviceTime + pathArc.arc.getTransitCost();
+					}
+				}
+				//if cannot merge routes
+				if(needToRestore) {
+					for(PathArc pathArc : currentPath.getPathArcs()) {
+						if (pathArc.servicing) {
+							for (PathArc pathArc2 : priorPath.getPathArcs()) {
+								if (pathArc2.arc.equals(pathArc.arc)) {
+									pathArc2.servicing = false;
+									break;
+								}
+							}
+						}
+					}
+					serviceTime = 0;
+					//update service time (reserve updates automatically)
+					for(PathArc pathArc : priorPath.getPathArcs()) {
+						if(pathArc.servicing) {
+							serviceTime = serviceTime + pathArc.arc.getServiceCost();
+							pathArc.arc.setServiceTime(serviceTime);
+						} else {
+							serviceTime = serviceTime + pathArc.arc.getTransitCost();
+						}
+					}
+				} else {
+					//delete current path
+					sortedPathes.remove(currentPath);
+				}
+				priorPath.setCost(serviceTime);
+			}
+			//sort paths
+			Collections.sort(sortedPathes, pathComparator);
+			//check stop condition
+			if (sortedPathes.size() <= graph.getNVehicles()) {
+				System.out.println("Feasible solution was found on step 3.");
+				possibleToContinue = false;
+				break;
+			}
+		}
+		//save sorted routes
+		graph.setPathes(new HashSet<>(sortedPathes));
+		for(Path path : graph.getPathes()) {
+			System.out.println(path);
+		}
+		System.out.println();
 	}
 	
 	//step 4
