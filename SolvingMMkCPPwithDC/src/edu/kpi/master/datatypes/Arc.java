@@ -16,6 +16,17 @@ public class Arc {
 		return beginNode.getName() + "->" + endNode.getName();
 	}
 	
+	public Arc copy() {
+		Arc result = new Arc();
+		result.beginNode = this.beginNode;
+		result.endNode = this.endNode;
+		result.serviceCost = this.serviceCost;
+		result.transitCost = this.transitCost;
+		result.deadline = this.deadline;
+		result.setServiceTime(this.serviceTime);
+		return result;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if(this == obj) {

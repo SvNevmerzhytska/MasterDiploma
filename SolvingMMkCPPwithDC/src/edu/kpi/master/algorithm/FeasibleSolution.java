@@ -51,13 +51,17 @@ public class FeasibleSolution {
 		if(possibleToContinue) {
 			step4();
 		}
-		maxCost = 0;
-		for(Path path : graph.getPathes()) {
-			if(path.getCost() > maxCost) {
-				maxCost = path.getCost();
-			}
-		}
 		computationTime = System.currentTimeMillis() - computationTime;
+		if(graph.getPathes().size() <= graph.getNVehicles()) {
+			maxCost = 0;
+			for(Path path : graph.getPathes()) {
+				if(path.getCost() > maxCost) {
+					maxCost = path.getCost();
+				}
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "Can not find feasible solution.", "Warning", JOptionPane.WARNING_MESSAGE);
+		}
 		Utils.window.getProgressBar().setValue(4);
 	}
 	
@@ -77,7 +81,9 @@ public class FeasibleSolution {
 				return;
 			}
 		}
-		graph.setArcs(PresetSolution.graph.getArcs());
+		for(Arc arc : PresetSolution.graph.getArcs()) {
+			graph.getArcs().add(arc.copy());
+		}
 		graph.setDepo(PresetSolution.graph.getDepo());
 		graph.setNVehicles(PresetSolution.graph.getNVehicles());
 	}
