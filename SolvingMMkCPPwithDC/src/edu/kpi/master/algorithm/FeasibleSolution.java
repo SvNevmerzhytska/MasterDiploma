@@ -347,6 +347,107 @@ public class FeasibleSolution {
 	
 	//step 4
 	public static void step4() {
-		
+		System.out.println("Step 4. Merge routes...");
+		//sort routes by its cost
+		ArrayList<Path> sortedPathes = new ArrayList<Path>(graph.getPathes());
+		Collections.sort(sortedPathes, pathComparator);
+		for(int i = sortedPathes.size() - 1; i >= 0; i--) {
+			Path currentPath = sortedPathes.get(i);
+			//try to merge paths
+			for(int j = i - 1; j >= 0; j--) {
+				Path priorPath = sortedPathes.get(j);
+				//try to merge current path with prior one
+				Path tempPath = new Path();
+				tempPath.getPathArcs().addAll(currentPath.getPathArcs());
+				tempPath.getPathArcs().addAll(priorPath.getPathArcs());
+				int serviceTime = 0;
+				boolean merged = true;
+				for(PathArc pathArc : tempPath.getPathArcs()) {
+					if(pathArc.servicing) {
+						serviceTime = serviceTime + pathArc.arc.getServiceCost();
+						if (serviceTime > pathArc.arc.getDeadline()) {
+							merged = false;
+							break;
+						} else {
+							pathArc.arc.setServiceTime(serviceTime);
+						}
+					} else {
+						serviceTime = serviceTime + pathArc.arc.getTransitCost();
+					}
+				}
+				//recalculate parameters
+				if(merged) {
+					tempPath.setCost(serviceTime);
+					sortedPathes.remove(priorPath);
+					sortedPathes.remove(currentPath);
+					sortedPathes.add(tempPath);
+					break;
+				} else {
+					//try to merge prior path with current
+					tempPath = new Path();
+					tempPath.getPathArcs().addAll(priorPath.getPathArcs());
+					tempPath.getPathArcs().addAll(currentPath.getPathArcs());
+					serviceTime = 0;
+					merged = true;
+					for(PathArc pathArc : tempPath.getPathArcs()) {
+						if(pathArc.servicing) {
+							serviceTime = serviceTime + pathArc.arc.getServiceCost();
+							if (serviceTime > pathArc.arc.getDeadline()) {
+								merged = false;
+								break;
+							} else {
+								pathArc.arc.setServiceTime(serviceTime);
+							}
+						} else {
+							serviceTime = serviceTime + pathArc.arc.getTransitCost();
+						}
+					}
+					//recalculate parameters
+					if(merged) {
+						tempPath.setCost(serviceTime);
+						sortedPathes.remove(priorPath);
+						sortedPathes.remove(currentPath);
+						sortedPathes.add(tempPath);
+						break;
+					} else {
+						//restore parameters for current and prior routes
+						serviceTime = 0;
+						for(PathArc pathArc : currentPath.getPathArcs()) {
+							if(pathArc.servicing) {
+								serviceTime = serviceTime + pathArc.arc.getServiceCost();
+								pathArc.arc.setServiceTime(serviceTime);
+							} else {
+								serviceTime = serviceTime + pathArc.arc.getTransitCost();
+							}
+						}
+						currentPath.setCost(serviceTime);
+						serviceTime = 0;
+						for(PathArc pathArc : priorPath.getPathArcs()) {
+							if(pathArc.servicing) {
+								serviceTime = serviceTime + pathArc.arc.getServiceCost();
+								pathArc.arc.setServiceTime(serviceTime);
+							} else {
+								serviceTime = serviceTime + pathArc.arc.getTransitCost();
+							}
+						}
+						priorPath.setCost(serviceTime);
+					}
+				}
+			}
+			//sort paths
+			Collections.sort(sortedPathes, pathComparator);
+			//check stop condition
+			if (sortedPathes.size() <= graph.getNVehicles()) {
+				System.out.println("Feasible solution was found on step 4.");
+				possibleToContinue = false;
+				break;
+			}
+		}
+		//save sorted routes
+		graph.setPathes(new HashSet<>(sortedPathes));
+		for(Path path : graph.getPathes()) {
+			System.out.println(path);
+		}
+		System.out.println();
 	}
 }
