@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.swing.JFileChooser;
 
 import edu.kpi.master.io.Reader;
+import edu.kpi.master.io.Writer;
 
 public class FileChooserHelper {
 	final static JFileChooser fc = new JFileChooser();
@@ -73,6 +74,7 @@ public class FileChooserHelper {
 		//action on Save
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = fc.getSelectedFile();
+			Writer.writeDataToFile(file);
         }
 	}
 }
