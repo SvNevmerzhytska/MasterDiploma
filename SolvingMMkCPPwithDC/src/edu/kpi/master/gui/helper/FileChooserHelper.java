@@ -9,11 +9,13 @@ import java.util.Date;
 
 import javax.swing.JFileChooser;
 
+import edu.kpi.master.generator.Generator;
 import edu.kpi.master.io.Reader;
 import edu.kpi.master.io.Writer;
 
 public class FileChooserHelper {
 	final static JFileChooser fc = new JFileChooser();
+	private static String fileName = "";
 	
 	public static void openFile(Component comp){
 		//set only xml filter
@@ -25,6 +27,7 @@ public class FileChooserHelper {
 		//action on Open
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fc.getSelectedFile();
+            fileName = file.getName().replace(".xml", "");
             Reader.readDataFromFile(file);
         }
 	}
@@ -34,11 +37,12 @@ public class FileChooserHelper {
 		fc.setFileFilter(new XmlFileFilter());
 		fc.setAcceptAllFileFilterUsed(false);
 		//form name of file
-		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+		String fileName = "test_p" + Generator.nVehicles + "v" + Generator.nVertexes + "a" + Generator.nArcs;
+		DateFormat dateFormat = new SimpleDateFormat("yyMMddHH");
 		Date date = new Date();
 		File f;
 		try {
-			f = new File(new File(dateFormat.format(date) + ".xml").getCanonicalPath());
+			f = new File(new File(fileName + "_" + dateFormat.format(date) + ".xml").getCanonicalPath());
 			fc.setSelectedFile(f);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -50,6 +54,7 @@ public class FileChooserHelper {
 		//action on Save
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = fc.getSelectedFile();
+			fileName = file.getName().replace(".xml", "");
         }
 	}
 	
@@ -57,19 +62,33 @@ public class FileChooserHelper {
 		//set only xml filter
 		fc.setFileFilter(new XmlFileFilter());
 		fc.setAcceptAllFileFilterUsed(false);
+		//
+		File folder = new File(System.getProperty("user.dir") + "/resources/output");
+		int maxCount = 0;
+		for (File file : folder.listFiles()) {
+			if (file.isFile() && file.getName().startsWith(fileName) && file.getName().endsWith(".xml")) {
+				try {
+					int x = Integer.parseInt(file.getName().replace(fileName + "_", "").replace(".xml", ""));
+					if (x >= maxCount) {
+						maxCount++;
+					}
+				}
+				catch (NumberFormatException ex) {
+					ex.printStackTrace();
+				}
+			} 
+		}
 		//form name of file
-		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-		Date date = new Date();
 		File f;
 		try {
-			f = new File(new File(dateFormat.format(date) + ".xml").getCanonicalPath());
+			f = new File(new File(fileName + "_" + maxCount + ".xml").getCanonicalPath());
 			fc.setSelectedFile(f);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		//set project folder as current directory
-		fc.setCurrentDirectory(new File(System.getProperty("user.dir") + "/resources/output"));
+		fc.setCurrentDirectory(folder);
 		int returnVal = fc.showSaveDialog(comp);
 		//action on Save
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
