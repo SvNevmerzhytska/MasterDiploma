@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graph>
+	<vertexSet>
+		<vertex name="0"/>
+		<vertex name="1"/>
+		<vertex name="2"/>
+		<vertex name="3"/>
+		<vertex name="4"/>
+		<vertex name="5"/>
+		<vertex name="6"/>
+		<vertex name="7"/>
+	</vertexSet>
+	<arcSet>
+		<arc begin="0" end="2" serviceCost="737" transitCost="1" deadline="9000"/>
+		<arc begin="0" end="7" serviceCost="1082" transitCost="1" deadline="9000"/>
+		<arc begin="1" end="2" serviceCost="510" transitCost="1" deadline="9000"/>
+		<arc begin="1" end="3" serviceCost="166" transitCost="1" deadline="9000"/>
+		<arc begin="1" end="4" serviceCost="745" transitCost="1" deadline="9000"/>
+		<arc begin="1" end="5" serviceCost="780" transitCost="1" deadline="9000"/>
+		<arc begin="1" end="6" serviceCost="370" transitCost="1" deadline="9000"/>
+		<arc begin="2" end="3" serviceCost="663" transitCost="1" deadline="9000"/>
+		<arc begin="2" end="6" serviceCost="311" transitCost="1" deadline="9000"/>
+		<arc begin="2" end="7" serviceCost="696" transitCost="1" deadline="9000"/>
+		<arc begin="3" end="6" serviceCost="486" transitCost="1" deadline="9000"/>
+		<arc begin="3" end="7" serviceCost="1046" transitCost="1" deadline="9000"/>
+		<arc begin="4" end="7" serviceCost="239" transitCost="1" deadline="9000"/>
+		<arc begin="5" end="6" serviceCost="490" transitCost="1" deadline="9000"/>
+		<arc begin="5" end="7" serviceCost="402" transitCost="1" deadline="9000"/>
+	</arcSet>
+	<pathSet>
+		<path cost="8705">
+		</path>
+		<path cost="8705">
+		</path>
+		<path cost="8705">
+		</path>
+		<path cost="8705">
+		</path>
+	</pathSet>
+</graph>

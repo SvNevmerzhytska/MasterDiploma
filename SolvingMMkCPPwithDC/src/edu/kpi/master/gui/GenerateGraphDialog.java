@@ -34,6 +34,7 @@ public class GenerateGraphDialog extends JDialog {
 	private JLabel lblNumberOfVehicles;
 	private JLabel lblNumberOfArcs;
 	private JLabel lblNumberOfVertexes;
+	private JLabel statusGeneration;
 
 	/**
 	 * Launch the application.
@@ -135,7 +136,7 @@ public class GenerateGraphDialog extends JDialog {
 			contentPanel.add(lblStatus, gbc_lblStatus);
 		}
 		{
-			JLabel statusGeneration = new JLabel("Not generated");
+			statusGeneration = new JLabel("Not generated");
 			statusGeneration.setIcon(new ImageIcon(GenerateGraphDialog.class.getResource("/images/red_circle.png")));
 			GridBagConstraints gbc_statusGeneration = new GridBagConstraints();
 			gbc_statusGeneration.gridx = 1;
@@ -150,15 +151,7 @@ public class GenerateGraphDialog extends JDialog {
 				JButton okButton = new JButton("Generate");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						try {
-							Generator.nVehicles = Integer.parseInt(nVehicles.getText());
-							Generator.nVertexes = Integer.parseInt(nVertexes.getText());
-							Generator.nArcs = Integer.parseInt(nArcs.getText());
-							Generator.generateData();
-						}
-						catch (NumberFormatException ex) {
-							JOptionPane.showMessageDialog(null, "Enter valid numbers into text fields.", "Warning", JOptionPane.WARNING_MESSAGE);
-						}
+						generate();
 					}
 				});
 				okButton.setIcon(new ImageIcon(GenerateGraphDialog.class.getResource("/images/arrow_right.png")));
@@ -209,8 +202,30 @@ public class GenerateGraphDialog extends JDialog {
 		}
 	}
 	
-	public void updateData() {
-		
+	public void generate() {
+		try {
+			Generator.nVehicles = Integer.parseInt(nVehicles.getText());
+			Generator.nVertexes = Integer.parseInt(nVertexes.getText());
+			Generator.nArcs = Integer.parseInt(nArcs.getText());
+			if(Generator.generateData()) {
+				statusGeneration.setText("Generated");
+				statusGeneration.setIcon(new ImageIcon(GenerateGraphDialog.class.getResource("/images/green_circle.png")));
+			} else {
+				statusGeneration.setText("Not generated");
+				statusGeneration.setIcon(new ImageIcon(GenerateGraphDialog.class.getResource("/images/red_circle.png")));
+			}
+		}
+		catch (NumberFormatException ex) {
+			JOptionPane.showMessageDialog(null, "Enter valid numbers into text fields.", "Warning", JOptionPane.WARNING_MESSAGE);
+		}
+	}
+	
+	public void reset() {
+		nVehicles.setText("1");
+		nVertexes.setText("2");
+		nArcs.setText("2");
+		statusGeneration.setText("Not generated");
+		statusGeneration.setIcon(new ImageIcon(GenerateGraphDialog.class.getResource("/images/red_circle.png")));
 	}
 
 }

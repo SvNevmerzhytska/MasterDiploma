@@ -55,8 +55,8 @@ public class Writer {
 			for(PathArc pathArc : path.getPathArcs()) {
 				Element arc = doc.createElement("arc");
 				pathElement.appendChild(arc);
-				arc.setAttribute("begin", pathArc.arc.getBeginNode().toString());
-				arc.setAttribute("end", pathArc.arc.getEndNode().toString());
+				arc.setAttribute("begin", pathArc.arc.getBeginNode().getName());
+				arc.setAttribute("end", pathArc.arc.getEndNode().getName());
 				arc.setAttribute("service", Boolean.toString(pathArc.servicing));
 			}
 		}

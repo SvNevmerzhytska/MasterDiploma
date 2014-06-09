@@ -9,6 +9,7 @@ public class Generator {
 	public static int nVehicles;
 	public static int nVertexes;
 	public static int nArcs;
+	public static Graph graph;
 	
 	//return true if generation process was successful
 	public static boolean generateData() {
@@ -18,6 +19,8 @@ public class Generator {
 			JOptionPane.showMessageDialog(null, message, "Warning", JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
+		graph = new Graph();
+		System.out.println("Generate data finished.");
 		return true;
 	}
 	
