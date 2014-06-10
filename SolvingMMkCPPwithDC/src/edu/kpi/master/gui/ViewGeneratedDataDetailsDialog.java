@@ -14,7 +14,6 @@ import javax.swing.JScrollPane;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
-
 import javax.swing.JTextField;
 
 import java.awt.GridBagLayout;
@@ -23,9 +22,9 @@ import java.awt.Insets;
 
 import javax.swing.ImageIcon;
 
-import edu.kpi.master.algorithm.PresetSolution;
 import edu.kpi.master.datatypes.Arc;
 import edu.kpi.master.datatypes.Path;
+import edu.kpi.master.generator.Generator;
 import edu.kpi.master.gui.helper.Utils;
 
 import java.awt.event.ActionListener;
@@ -184,7 +183,7 @@ public class ViewGeneratedDataDetailsDialog extends JDialog {
 		dtm.setColumnIdentifiers(new String[] {
 				"Arc", "Service Cost", "Transit Cost"
 			});
-		for(Arc arc : PresetSolution.graph.getArcs()) {
+		for(Arc arc : Generator.graph.getArcs()) {
 			Object[] rowData = new Object[3];
 			rowData[0] = arc.getName();
 			rowData[1] = arc.getServiceCost();
@@ -193,13 +192,13 @@ public class ViewGeneratedDataDetailsDialog extends JDialog {
 		}
 		tblGeneratedArcs.setModel(dtm);
 		//max cost
-		maxCost.setText(Long.toString(PresetSolution.maxPathCost));
+		maxCost.setText(Long.toString(Generator.getMaxCost()));
 		//fill table with arcs
 		dtm = new DefaultTableModel();
 		dtm.setColumnIdentifiers(new String[] {
 				"Rout", "Cost"
 			});
-		for(Path path : PresetSolution.graph.getPathes()) {
+		for(Path path : Generator.graph.getPathes()) {
 			Object[] rowData = new Object[3];
 			rowData[0] = path.getArcChain();
 			rowData[1] = path.getCost();

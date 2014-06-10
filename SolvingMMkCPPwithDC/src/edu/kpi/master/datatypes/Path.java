@@ -7,6 +7,13 @@ public class Path {
 	private LinkedList<PathArc> pathArcs = new LinkedList<PathArc>();
 	private long cost;
 	
+	public Path copy() {
+		Path result = new Path();
+		result.cost = this.cost;
+		result.pathArcs = new  LinkedList<>(this.pathArcs);
+		return result;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if(this == obj) {

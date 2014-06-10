@@ -75,7 +75,7 @@ public class DijkstraShortestPath {
 		return restorePathForVertex(endVertex);
 	}
 	
-	public Path restorePathForVertex (VertexExtension v) {
+	private Path restorePathForVertex (VertexExtension v) {
 		Path path = new Path();
 		path.setCost(v.distanse);
 		//restoring vertex chain

@@ -6,7 +6,6 @@ import java.util.Set;
 public class Vertex {
 	
 	private String name;
-	private Set<Arc> incidentArcs = new HashSet<Arc>();
 	//arcs ended in current vertex
 	private Set<Arc> inArcs = new HashSet<Arc>();
 	//arcs started in current vertex
@@ -45,12 +44,6 @@ public class Vertex {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public Set<Arc> getIncidentArcs() {
-		return incidentArcs;
-	}
-	public void setIncidentArcs(Set<Arc> incidentArcs) {
-		this.incidentArcs = incidentArcs;
 	}
 	public Set<Arc> getInArcs() {
 		return inArcs;

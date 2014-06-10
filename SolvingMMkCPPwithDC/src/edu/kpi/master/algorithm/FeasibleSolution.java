@@ -24,7 +24,7 @@ public class FeasibleSolution {
 	private static boolean possibleToContinue = true;
 	private static Set<Path> simpleRouts;
 	
-	private static Comparator<Path> pathComparator = new Comparator<Path>() {
+	public static Comparator<Path> pathComparator = new Comparator<Path>() {
 		@Override
 		public int compare(Path arg0, Path arg1) {
 			return (int) (arg1.getCost() - arg0.getCost());

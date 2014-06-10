@@ -55,7 +55,6 @@ public class Arc {
 	public void setBeginNode(Vertex beginNode) {
 		this.beginNode = beginNode;
 		beginNode.getOutArcs().add(this);
-		beginNode.getIncidentArcs().add(this);
 	}
 	public Vertex getEndNode() {
 		return endNode;
@@ -63,7 +62,6 @@ public class Arc {
 	public void setEndNode(Vertex endNode) {
 		this.endNode = endNode;
 		endNode.getInArcs().add(this);
-		endNode.getIncidentArcs().add(this);
 	}
 	public int getServiceCost() {
 		return serviceCost;

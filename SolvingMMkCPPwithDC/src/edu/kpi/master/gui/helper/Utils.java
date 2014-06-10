@@ -34,6 +34,7 @@ public class Utils {
     }
     
     public static void showGenerateGraphDialog(){
+    	generateGraphDialog.reset();
     	generateGraphDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
     	generateGraphDialog.setVisible(true);
     }

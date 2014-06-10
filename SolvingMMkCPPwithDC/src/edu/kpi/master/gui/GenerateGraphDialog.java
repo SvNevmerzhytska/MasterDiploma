@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import edu.kpi.master.datatypes.Graph;
 import edu.kpi.master.generator.Generator;
 import edu.kpi.master.gui.helper.FileChooserHelper;
 import edu.kpi.master.gui.helper.Utils;
@@ -226,6 +227,8 @@ public class GenerateGraphDialog extends JDialog {
 		nArcs.setText("2");
 		statusGeneration.setText("Not generated");
 		statusGeneration.setIcon(new ImageIcon(GenerateGraphDialog.class.getResource("/images/red_circle.png")));
+		//reset graph (for details)
+		Generator.graph = new Graph();
 	}
 
 }
