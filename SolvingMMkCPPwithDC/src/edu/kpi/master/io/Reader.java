@@ -28,6 +28,7 @@ public class Reader {
 			doc.getDocumentElement().normalize();
 			
 			PresetSolution.graph = new Graph();
+			PresetSolution.maxPathCost = 0;
 			
 			//read vertexes from file
 			readVertexes(doc);

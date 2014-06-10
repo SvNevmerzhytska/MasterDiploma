@@ -234,7 +234,7 @@ public class Generator {
 			for (PathArc pathArc : path.getPathArcs()) {
 				if (pathArc.servicing) {
 					pathCost += SERVICE_COST;
-					if (deadline < pathCost) {
+					while (deadline < pathCost) {
 						deadline += DEADLINE_STEP;
 					}
 					pathArc.arc.setDeadline(deadline);
