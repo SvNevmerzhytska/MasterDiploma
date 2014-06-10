@@ -55,6 +55,7 @@ public class FileChooserHelper {
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = fc.getSelectedFile();
 			fileName = file.getName().replace(".xml", "");
+			Writer.writeDataToFile(file, false);
         }
 	}
 	
@@ -93,7 +94,7 @@ public class FileChooserHelper {
 		//action on Save
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = fc.getSelectedFile();
-			Writer.writeDataToFile(file);
+			Writer.writeDataToFile(file, true);
         }
 	}
 }

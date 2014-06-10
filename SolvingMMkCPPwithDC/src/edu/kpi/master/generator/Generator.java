@@ -46,6 +46,12 @@ public class Generator {
 		//generate paths
 		generatePaths();
 		
+		for(Arc arc : graph.getArcs()) {
+			System.out.println(arc);
+		}
+		for(Path path : graph.getPathes()) {
+			System.out.println(path);
+		}
 		System.out.println("Generate data finished.");
 		return true;
 	}
@@ -237,14 +243,8 @@ public class Generator {
 				}
 			}
 		}
-		//
-		for(Arc arc : graph.getArcs()) {
-			System.out.println(arc);
-		}
-		System.out.println();
-		for(Path path : paths) {
-			System.out.println(path);
-		}
+		//set generated paths to graph
+		graph.getPathes().addAll(paths);
 	}
 
 	public static long getMaxCost() {
