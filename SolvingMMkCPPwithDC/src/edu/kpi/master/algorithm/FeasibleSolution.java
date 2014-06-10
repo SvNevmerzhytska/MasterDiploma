@@ -213,10 +213,10 @@ public class FeasibleSolution {
 						//update service time (reserve updates automatically)
 						for(PathArc pathArc : currentPath.getPathArcs()) {
 							if(pathArc.servicing) {
-								serviceTime = serviceTime + pathArc.arc.getServiceCost();
+								serviceTime += pathArc.arc.getServiceCost();
 								pathArc.arc.setServiceTime(serviceTime);
 							} else {
-								serviceTime = serviceTime + pathArc.arc.getTransitCost();
+								serviceTime += pathArc.arc.getTransitCost();
 							}
 						}
 						currentPath.setCost(serviceTime);
@@ -303,7 +303,7 @@ public class FeasibleSolution {
 							pathArc.arc.setServiceTime(serviceTime);
 						}
 					} else {
-						serviceTime = serviceTime + pathArc.arc.getTransitCost();
+						serviceTime += pathArc.arc.getTransitCost();
 					}
 				}
 				//if cannot merge routes
@@ -325,7 +325,7 @@ public class FeasibleSolution {
 							serviceTime = serviceTime + pathArc.arc.getServiceCost();
 							pathArc.arc.setServiceTime(serviceTime);
 						} else {
-							serviceTime = serviceTime + pathArc.arc.getTransitCost();
+							serviceTime += pathArc.arc.getTransitCost();
 						}
 					}
 				} else {
@@ -370,7 +370,7 @@ public class FeasibleSolution {
 				boolean merged = true;
 				for(PathArc pathArc : tempPath.getPathArcs()) {
 					if(pathArc.servicing) {
-						serviceTime = serviceTime + pathArc.arc.getServiceCost();
+						serviceTime += pathArc.arc.getServiceCost();
 						if (serviceTime > pathArc.arc.getDeadline()) {
 							merged = false;
 							break;
@@ -378,7 +378,7 @@ public class FeasibleSolution {
 							pathArc.arc.setServiceTime(serviceTime);
 						}
 					} else {
-						serviceTime = serviceTime + pathArc.arc.getTransitCost();
+						serviceTime += pathArc.arc.getTransitCost();
 					}
 				}
 				//recalculate parameters
@@ -397,7 +397,7 @@ public class FeasibleSolution {
 					merged = true;
 					for(PathArc pathArc : tempPath.getPathArcs()) {
 						if(pathArc.servicing) {
-							serviceTime = serviceTime + pathArc.arc.getServiceCost();
+							serviceTime += pathArc.arc.getServiceCost();
 							if (serviceTime > pathArc.arc.getDeadline()) {
 								merged = false;
 								break;
@@ -405,7 +405,7 @@ public class FeasibleSolution {
 								pathArc.arc.setServiceTime(serviceTime);
 							}
 						} else {
-							serviceTime = serviceTime + pathArc.arc.getTransitCost();
+							serviceTime += pathArc.arc.getTransitCost();
 						}
 					}
 					//recalculate parameters
@@ -420,20 +420,20 @@ public class FeasibleSolution {
 						serviceTime = 0;
 						for(PathArc pathArc : currentPath.getPathArcs()) {
 							if(pathArc.servicing) {
-								serviceTime = serviceTime + pathArc.arc.getServiceCost();
+								serviceTime += pathArc.arc.getServiceCost();
 								pathArc.arc.setServiceTime(serviceTime);
 							} else {
-								serviceTime = serviceTime + pathArc.arc.getTransitCost();
+								serviceTime += pathArc.arc.getTransitCost();
 							}
 						}
 						currentPath.setCost(serviceTime);
 						serviceTime = 0;
 						for(PathArc pathArc : priorPath.getPathArcs()) {
 							if(pathArc.servicing) {
-								serviceTime = serviceTime + pathArc.arc.getServiceCost();
+								serviceTime += pathArc.arc.getServiceCost();
 								pathArc.arc.setServiceTime(serviceTime);
 							} else {
-								serviceTime = serviceTime + pathArc.arc.getTransitCost();
+								serviceTime += pathArc.arc.getTransitCost();
 							}
 						}
 						priorPath.setCost(serviceTime);

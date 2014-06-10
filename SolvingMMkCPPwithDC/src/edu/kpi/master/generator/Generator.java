@@ -24,6 +24,7 @@ public class Generator {
 	private static long maxCost;
 	private static int SERVICE_COST = 2;
 	private static int TRANSIT_COST = 1;
+	private static int DEADLINE_STEP = 5;
 	
 	private static Random random = new Random();
 	
@@ -89,10 +90,6 @@ public class Generator {
 				}
 			}
 		}
-		for(Arc arc : graph.getArcs()) {
-			System.out.println(arc);
-		}
-		System.out.println();
 		//remove unnecessary arcs
 		ArrayList<Arc> arcs = new ArrayList<Arc>(graph.getArcs());
 		while (arcs.size() > nArcs) {
@@ -105,10 +102,6 @@ public class Generator {
 			}
 		}
 		graph.setArcs(new HashSet<Arc>(arcs));
-		for(Arc arc : graph.getArcs()) {
-			System.out.println(arc);
-		}
-		System.out.println();
 	}
 	
 	public static void generatePaths() {
@@ -208,6 +201,47 @@ public class Generator {
 					}
 				}
 			}
+		//place servicing of arcs
+		arcsInPaths = new ArrayList<Arc>();
+		while (true) {
+			Collections.sort(paths, FeasibleSolution.pathComparator);
+			markArcReview:
+			for(int i = paths.size() - 1; i >= 0; i--) {
+				for(PathArc pathArc : paths.get(i).getPathArcs()) {
+					if(!arcsInPaths.contains(pathArc.arc)) {
+						pathArc.servicing = true;
+						paths.get(i).setCost(paths.get(i).getCost() + SERVICE_COST - TRANSIT_COST);
+						arcsInPaths.add(pathArc.arc);
+						break markArcReview;
+					}
+				}
+			}
+			//stop when all arcs are serviced
+			if(arcsInPaths.containsAll(graph.getArcs())) {
+				break;
+			}
+		}
+		//set deadlines
+		for (Path path : paths) {
+			long pathCost = 0;
+			int deadline = 0;
+			for (PathArc pathArc : path.getPathArcs()) {
+				if (pathArc.servicing) {
+					pathCost += SERVICE_COST;
+					if (deadline < pathCost) {
+						deadline += DEADLINE_STEP;
+					}
+					pathArc.arc.setDeadline(deadline);
+				} else {
+					pathCost += TRANSIT_COST;
+				}
+			}
+		}
+		//
+		for(Arc arc : graph.getArcs()) {
+			System.out.println(arc);
+		}
+		System.out.println();
 		for(Path path : paths) {
 			System.out.println(path);
 		}
