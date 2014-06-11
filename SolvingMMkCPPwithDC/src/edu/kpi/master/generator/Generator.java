@@ -144,7 +144,6 @@ public class Generator {
 		}
 		//if number of paths is bigger than required
 		if(paths.size() > nVehicles) {
-			System.out.println(paths.size() + " " + nVehicles);
 			//find grater paths that contain all arcs from smaller one
 			Collections.sort(paths, FeasibleSolution.pathComparator);
 			for(int i = paths.size() - 1; i >= 0; i--) {
@@ -180,7 +179,6 @@ public class Generator {
 			}
 		} else
 			if (paths.size() < nVehicles) {
-				System.out.println(paths.size() + " " + nVehicles);
 				//count number of appearances of arcs in paths
 				int[] appearances = new int[arcsInPaths.size()];
 				for(Path path : paths) {

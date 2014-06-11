@@ -35,6 +35,7 @@ public class FeasibleSolution {
 		graph = new Graph();
 		possibleToContinue = true;
 		computationTime = System.currentTimeMillis();
+		maxCost = 0;
 		initialize();
 		if(possibleToContinue) {
 			step1();
@@ -52,14 +53,12 @@ public class FeasibleSolution {
 			step4();
 		}
 		computationTime = System.currentTimeMillis() - computationTime;
-		if(graph.getPathes().size() <= graph.getNVehicles()) {
-			maxCost = 0;
-			for(Path path : graph.getPathes()) {
-				if(path.getCost() > maxCost) {
-					maxCost = path.getCost();
-				}
+		for(Path path : graph.getPathes()) {
+			if(path.getCost() > maxCost) {
+				maxCost = path.getCost();
 			}
-		} else {
+		}
+		if(!(graph.getPathes().size() <= graph.getNVehicles())) {
 			JOptionPane.showMessageDialog(null, "Can not find feasible solution.", "Warning", JOptionPane.WARNING_MESSAGE);
 		}
 		Utils.window.getProgressBar().setValue(4);

@@ -53,11 +53,12 @@ public class Writer {
 		rootElement.setAttribute("nPaths", Long.toString(FeasibleSolution.graph.getNVehicles()));
 		rootElement.setAttribute("nVertexes", Long.toString(FeasibleSolution.graph.getVertexes().size()));
 		rootElement.setAttribute("nArcs", Long.toString(PresetSolution.graph.getArcs().size()));
-		rootElement.setAttribute("expectedCost", Long.toString(FeasibleSolution.maxCost));
+		rootElement.setAttribute("expectedCost", Long.toString(PresetSolution.maxPathCost));
 		rootElement.setAttribute("maxCost", Long.toString(FeasibleSolution.maxCost));
 		rootElement.setAttribute("time", Long.toString(FeasibleSolution.computationTime));
 		Element pathSet = doc.createElement("pathSet");
 		rootElement.appendChild(pathSet);
+		pathSet.setAttribute("size", Integer.toString(FeasibleSolution.graph.getPathes().size()));
 		//write all paths
 		for(Path path : FeasibleSolution.graph.getPathes()) {
 			Element pathElement = doc.createElement("path");

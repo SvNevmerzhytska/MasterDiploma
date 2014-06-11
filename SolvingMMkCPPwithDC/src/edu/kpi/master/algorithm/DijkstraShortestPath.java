@@ -127,7 +127,7 @@ public class DijkstraShortestPath {
 		}
 		//while not found shortest path from v1 to v2
 		long time = System.currentTimeMillis();
-		while(!endVertex.mark) {
+		while(endVertex.distanse == Long.MAX_VALUE) {
 			//update temporary distances
 			for(VertexExtension vertexExt : vertexes) {
 				for(Arc arc : arcs) {
@@ -135,17 +135,14 @@ public class DijkstraShortestPath {
 							vertexExt.vertex.equals(arc.getEndNode())) {
 						if(vertexExt.distanse > currentVertex.distanse + arc.getTransitCost()) {
 							vertexExt.distanse = currentVertex.distanse + arc.getTransitCost();
-							vertexExt.previousVertex = currentVertex.vertex;
 							break;
 						}
 					}
 				}
 			}
 			//find minimum temporary distance
-			long minimumDist = Long.MAX_VALUE;
 			for(VertexExtension vertExt : vertexes) {
-				if(!vertExt.mark && vertExt.distanse < minimumDist) {
-					minimumDist = vertExt.distanse;
+				if(!vertExt.mark && vertExt.distanse < Long.MAX_VALUE) {
 					currentVertex = vertExt;
 				}
 			}
