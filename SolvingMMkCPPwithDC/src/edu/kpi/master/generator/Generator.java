@@ -26,8 +26,6 @@ public class Generator {
 	private static int TRANSIT_COST = 1;
 	private static int DEADLINE_STEP = 5;
 	
-	private static Random random = new Random();
-	
 	//return true if generation process was successful
 	public static boolean generateData() {
 		//validate input data
@@ -98,6 +96,8 @@ public class Generator {
 		}
 		//remove unnecessary arcs
 		ArrayList<Arc> arcs = new ArrayList<Arc>(graph.getArcs());
+		Random random = new Random();
+		DijkstraShortestPath dsp = new DijkstraShortestPath(graph.getVertexes(), graph.getArcs());
 		while (arcs.size() > nArcs) {
 			int index = random.nextInt(arcs.size());
 			Arc arc = arcs.get(index);
@@ -105,6 +105,13 @@ public class Generator {
 				arcs.remove(arc);
 				arc.getBeginNode().getOutArcs().remove(arc);
 				arc.getEndNode().getInArcs().remove(arc);
+				dsp.setArcs(new HashSet<Arc>(arcs));
+				//to avoid not linked circles
+				if(!dsp.isShortestPathExist(graph.getDepo(), arc.getEndNode()) || !dsp.isShortestPathExist(arc.getBeginNode(), graph.getDepo())) {
+					arcs.add(arc);
+					arc.getBeginNode().getOutArcs().add(arc);
+					arc.getEndNode().getInArcs().add(arc);
+				}
 			}
 		}
 		graph.setArcs(new HashSet<Arc>(arcs));
@@ -137,6 +144,7 @@ public class Generator {
 		}
 		//if number of paths is bigger than required
 		if(paths.size() > nVehicles) {
+			System.out.println(paths.size() + " " + nVehicles);
 			//find grater paths that contain all arcs from smaller one
 			Collections.sort(paths, FeasibleSolution.pathComparator);
 			for(int i = paths.size() - 1; i >= 0; i--) {
@@ -172,6 +180,7 @@ public class Generator {
 			}
 		} else
 			if (paths.size() < nVehicles) {
+				System.out.println(paths.size() + " " + nVehicles);
 				//count number of appearances of arcs in paths
 				int[] appearances = new int[arcsInPaths.size()];
 				for(Path path : paths) {
@@ -195,7 +204,7 @@ public class Generator {
 								if(appearances[i] == 1 && pathArc.arc.equals(arcsInPaths.get(i))) {
 									count++;
 									if(count > 1) {
-										paths.add(paths.get(pathIndex));
+										paths.add(paths.get(pathIndex).copy());
 									}
 									//check stop option
 									if(paths.size() == nVehicles) {
