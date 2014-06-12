@@ -139,7 +139,8 @@ public class MainWindow {
 		JMenuItem mntmAboutMmKcpp = new JMenuItem("About MM k-CPP with DC");
 		mntmAboutMmKcpp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showMessageDialog(frmMmKcppWith, "Bla bla about programm.", "About MM k-CPP with DC", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(frmMmKcppWith, "This problem was implemented to test an algorithm of finding feasible solution of MM k-CPP with DC." 
+						+ "\nAuthor: Svitlana Nevmerzhytska", "About MM k-CPP with DC", JOptionPane.PLAIN_MESSAGE);
 			}
 		});
 		mnHelp.add(mntmAboutMmKcpp);
