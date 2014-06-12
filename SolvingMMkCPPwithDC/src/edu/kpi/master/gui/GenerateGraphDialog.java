@@ -15,8 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import edu.kpi.master.algorithm.Generator;
 import edu.kpi.master.datatypes.Graph;
-import edu.kpi.master.generator.Generator;
 import edu.kpi.master.gui.helper.FileChooserHelper;
 import edu.kpi.master.gui.helper.Utils;
 

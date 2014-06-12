@@ -27,8 +27,8 @@ import javax.swing.JProgressBar;
 import javax.swing.UIManager;
 
 import edu.kpi.master.algorithm.FeasibleSolution;
+import edu.kpi.master.algorithm.Generator;
 import edu.kpi.master.algorithm.PresetSolution;
-import edu.kpi.master.generator.Generator;
 import edu.kpi.master.gui.helper.FileChooserHelper;
 import edu.kpi.master.gui.helper.Utils;
 

@@ -13,12 +13,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import edu.kpi.master.algorithm.FeasibleSolution;
+import edu.kpi.master.algorithm.Generator;
 import edu.kpi.master.algorithm.PresetSolution;
 import edu.kpi.master.datatypes.Arc;
 import edu.kpi.master.datatypes.Path;
 import edu.kpi.master.datatypes.Path.PathArc;
 import edu.kpi.master.datatypes.Vertex;
-import edu.kpi.master.generator.Generator;
 
 public class Writer {
 

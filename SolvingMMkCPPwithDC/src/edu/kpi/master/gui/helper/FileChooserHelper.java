@@ -9,7 +9,7 @@ import java.util.Date;
 
 import javax.swing.JFileChooser;
 
-import edu.kpi.master.generator.Generator;
+import edu.kpi.master.algorithm.Generator;
 import edu.kpi.master.io.Reader;
 import edu.kpi.master.io.Writer;
 

@@ -22,9 +22,9 @@ import java.awt.Insets;
 
 import javax.swing.ImageIcon;
 
+import edu.kpi.master.algorithm.Generator;
 import edu.kpi.master.datatypes.Arc;
 import edu.kpi.master.datatypes.Path;
-import edu.kpi.master.generator.Generator;
 import edu.kpi.master.gui.helper.Utils;
 
 import java.awt.event.ActionListener;
