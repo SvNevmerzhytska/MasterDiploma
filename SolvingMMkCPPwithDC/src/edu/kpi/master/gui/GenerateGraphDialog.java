@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JFileChooser;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -19,12 +20,18 @@ import edu.kpi.master.algorithm.Generator;
 import edu.kpi.master.datatypes.Graph;
 import edu.kpi.master.gui.helper.FileChooserHelper;
 import edu.kpi.master.gui.helper.Utils;
+import edu.kpi.master.io.Writer;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class GenerateGraphDialog extends JDialog {
 
@@ -37,6 +44,7 @@ public class GenerateGraphDialog extends JDialog {
 	private JLabel lblNumberOfVertexes;
 	private JLabel statusGeneration;
 	private JTextField tfDedlineReserve;
+	private JTextField tfSolutions;
 
 	/**
 	 * Launch the application.
@@ -56,13 +64,13 @@ public class GenerateGraphDialog extends JDialog {
 	 */
 	public GenerateGraphDialog() {
 		setTitle("Generate graph");
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 350);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[]{212, 212, 0};
-		gbl_contentPanel.rowHeights = new int[] {50, 0, 23, 23, 23, 0};
+		gbl_contentPanel.rowHeights = new int[] {30, 0, 23, 23, 23, 0, 23, 23, 23, 0};
 		gbl_contentPanel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
@@ -135,7 +143,7 @@ public class GenerateGraphDialog extends JDialog {
 			gbc_lblDedlineReserve.anchor = GridBagConstraints.EAST;
 			gbc_lblDedlineReserve.insets = new Insets(0, 0, 5, 5);
 			gbc_lblDedlineReserve.gridx = 0;
-			gbc_lblDedlineReserve.gridy = 4;
+			gbc_lblDedlineReserve.gridy = 5;
 			contentPanel.add(lblDedlineReserve, gbc_lblDedlineReserve);
 		}
 		{
@@ -145,16 +153,36 @@ public class GenerateGraphDialog extends JDialog {
 			gbc_tfDedlineReserve.insets = new Insets(0, 0, 5, 0);
 			gbc_tfDedlineReserve.fill = GridBagConstraints.HORIZONTAL;
 			gbc_tfDedlineReserve.gridx = 1;
-			gbc_tfDedlineReserve.gridy = 4;
+			gbc_tfDedlineReserve.gridy = 5;
 			contentPanel.add(tfDedlineReserve, gbc_tfDedlineReserve);
 			tfDedlineReserve.setColumns(10);
+		}
+		{
+			JLabel lblNumberOfSolutions = new JLabel("Number of solutions to generate:");
+			GridBagConstraints gbc_lblNumberOfSolutions = new GridBagConstraints();
+			gbc_lblNumberOfSolutions.anchor = GridBagConstraints.EAST;
+			gbc_lblNumberOfSolutions.insets = new Insets(0, 0, 5, 5);
+			gbc_lblNumberOfSolutions.gridx = 0;
+			gbc_lblNumberOfSolutions.gridy = 7;
+			contentPanel.add(lblNumberOfSolutions, gbc_lblNumberOfSolutions);
+		}
+		{
+			tfSolutions = new JTextField();
+			tfSolutions.setText("1");
+			GridBagConstraints gbc_textField = new GridBagConstraints();
+			gbc_textField.insets = new Insets(0, 0, 5, 0);
+			gbc_textField.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textField.gridx = 1;
+			gbc_textField.gridy = 7;
+			contentPanel.add(tfSolutions, gbc_textField);
+			tfSolutions.setColumns(10);
 		}
 		{
 			JLabel lblStatus = new JLabel("Status:");
 			GridBagConstraints gbc_lblStatus = new GridBagConstraints();
 			gbc_lblStatus.insets = new Insets(0, 0, 0, 5);
 			gbc_lblStatus.gridx = 0;
-			gbc_lblStatus.gridy = 5;
+			gbc_lblStatus.gridy = 8;
 			contentPanel.add(lblStatus, gbc_lblStatus);
 		}
 		{
@@ -162,7 +190,7 @@ public class GenerateGraphDialog extends JDialog {
 			statusGeneration.setIcon(new ImageIcon(GenerateGraphDialog.class.getResource("/images/red_circle.png")));
 			GridBagConstraints gbc_statusGeneration = new GridBagConstraints();
 			gbc_statusGeneration.gridx = 1;
-			gbc_statusGeneration.gridy = 5;
+			gbc_statusGeneration.gridy = 8;
 			contentPanel.add(statusGeneration, gbc_statusGeneration);
 		}
 		{
@@ -189,6 +217,31 @@ public class GenerateGraphDialog extends JDialog {
 						Utils.viewGeneratedDataDetails.updateData();
 					}
 				});
+				{
+					JButton btnGenerateAll = new JButton("Generate all");
+					btnGenerateAll.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							try {
+								DateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmssSS");
+								for(int i = 0; i < Integer.parseInt(tfSolutions.getText()); i++) {
+									//generate data
+									generate();
+									//save generated data
+									String fileName = "test_p" + Generator.nVehicles + "v" + Generator.nVertexes + "a" + Generator.nArcs + "d" + Generator.DEADLINE_RESERVE;
+									Date date = new Date();
+									File file;
+									file = new File(System.getProperty("user.dir") + "/resources/input/" + fileName + "_" + dateFormat.format(date) + ".xml");
+									Writer.writeDataToFile(file, false);
+								}
+							}
+							catch (NumberFormatException ex) {
+								JOptionPane.showMessageDialog(null, "Enter valid numbers into text fields.", "Warning", JOptionPane.WARNING_MESSAGE);
+							}
+						}
+					});
+					btnGenerateAll.setIcon(new ImageIcon(GenerateGraphDialog.class.getResource("/images/green-right-double-arrows.png")));
+					buttonPane.add(btnGenerateAll);
+				}
 				btnDetails.setIcon(new ImageIcon(GenerateGraphDialog.class.getResource("/images/info.png")));
 				buttonPane.add(btnDetails);
 			}
@@ -248,6 +301,7 @@ public class GenerateGraphDialog extends JDialog {
 		nVertexes.setText("2");
 		nArcs.setText("2");
 		tfDedlineReserve.setText("10");
+		tfSolutions.setText("1");
 		statusGeneration.setText("Not generated");
 		statusGeneration.setIcon(new ImageIcon(GenerateGraphDialog.class.getResource("/images/red_circle.png")));
 		//reset graph (for details)

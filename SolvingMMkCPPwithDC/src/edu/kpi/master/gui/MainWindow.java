@@ -2,6 +2,7 @@ package edu.kpi.master.gui;
 
 import java.awt.EventQueue;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -31,9 +32,14 @@ import edu.kpi.master.algorithm.Generator;
 import edu.kpi.master.algorithm.PresetSolution;
 import edu.kpi.master.gui.helper.FileChooserHelper;
 import edu.kpi.master.gui.helper.Utils;
+import edu.kpi.master.gui.helper.XmlFileFilter;
+import edu.kpi.master.io.Reader;
+import edu.kpi.master.io.Writer;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
 
 public class MainWindow {
 
@@ -44,10 +50,10 @@ public class MainWindow {
 	private JTextField computationTime;
 	private JTextField maxCost;
 	private JTextField presetMaxCost;
-	private JProgressBar progressBar;
 
 	/**
 	 * Launch the application.
+	 * @wbp.parser.entryPoint
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -64,6 +70,7 @@ public class MainWindow {
 
 	/**
 	 * Create the application.
+	 * @wbp.parser.entryPoint
 	 */
 	public MainWindow() {
 		initialize();
@@ -97,21 +104,6 @@ public class MainWindow {
 		mntmOpenFile.setIcon(new ImageIcon(MainWindow.class.getResource("/com/sun/java/swing/plaf/windows/icons/Directory.gif")));
 		mnFile.add(mntmOpenFile);
 		
-		JMenuItem mntmGenerateGraph = new JMenuItem("Generate graph");
-		mntmGenerateGraph.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Utils.showGenerateGraphDialog();
-				nVehicles.setText(Integer.toString(PresetSolution.graph.getNVehicles()));
-				nVertexes.setText(Integer.toString(PresetSolution.graph.getVertexes().size()));
-				nArcs.setText(Integer.toString(PresetSolution.graph.getArcs().size()));
-				presetMaxCost.setText(Long.toString(PresetSolution.maxPathCost));
-			}
-		});
-		mnFile.add(mntmGenerateGraph);
-		
-		JSeparator separator = new JSeparator();
-		mnFile.add(separator);
-		
 		JMenuItem mntmSaveResults = new JMenuItem("Save results");
 		mntmSaveResults.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -121,9 +113,6 @@ public class MainWindow {
 		mntmSaveResults.setIcon(new ImageIcon(MainWindow.class.getResource("/com/sun/java/swing/plaf/windows/icons/FloppyDrive.gif")));
 		mnFile.add(mntmSaveResults);
 		
-		JSeparator separator_1 = new JSeparator();
-		mnFile.add(separator_1);
-		
 		JMenuItem mntmExit = new JMenuItem("Exit");
 		mntmExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -132,6 +121,21 @@ public class MainWindow {
 			}
 		});
 		mnFile.add(mntmExit);
+		
+		JMenu mnGenerate = new JMenu("Generate");
+		menuBar.add(mnGenerate);
+		
+		JMenuItem mntmGenerateGraph = new JMenuItem("Generate graph");
+		mnGenerate.add(mntmGenerateGraph);
+		mntmGenerateGraph.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Utils.showGenerateGraphDialog();
+				nVehicles.setText(Integer.toString(PresetSolution.graph.getNVehicles()));
+				nVertexes.setText(Integer.toString(PresetSolution.graph.getVertexes().size()));
+				nArcs.setText(Integer.toString(PresetSolution.graph.getArcs().size()));
+				presetMaxCost.setText(Long.toString(PresetSolution.maxPathCost));
+			}
+		});
 		
 		JMenu mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
@@ -231,7 +235,7 @@ public class MainWindow {
 		Run.setBorder(new TitledBorder(null, "Find feasible solution", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		frmMmKcppWith.getContentPane().add(Run, BorderLayout.CENTER);
 		GridBagLayout gbl_Run = new GridBagLayout();
-		gbl_Run.columnWidths = new int[]{106, 71, 146, 0};
+		gbl_Run.columnWidths = new int[] {106, 150, 10, 0};
 		gbl_Run.rowHeights = new int[]{25, 0};
 		gbl_Run.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_Run.rowWeights = new double[]{0.0, Double.MIN_VALUE};
@@ -254,13 +258,58 @@ public class MainWindow {
 		gbc_btnRun.gridy = 0;
 		Run.add(btnRun, gbc_btnRun);
 		
-		progressBar = new JProgressBar();
-		GridBagConstraints gbc_progressBar = new GridBagConstraints();
-		gbc_progressBar.anchor = GridBagConstraints.WEST;
-		gbc_progressBar.gridx = 2;
-		gbc_progressBar.gridy = 0;
-		Run.add(progressBar, gbc_progressBar);
-		progressBar.setMaximum(4);
+		JButton btnRunAllFiles = new JButton("Run all files in folder");
+		btnRunAllFiles.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//open files in folder
+				File folder = new File (System.getProperty("user.dir") + "/resources/input");
+				for(File file : folder.listFiles()) {
+					String fileName = file.getName().replace(".xml", "");
+					//read data
+					Reader.readDataFromFile(file);
+					nVehicles.setText(Integer.toString(PresetSolution.graph.getPathes().size()));
+					nVertexes.setText(Integer.toString(PresetSolution.graph.getVertexes().size()));
+					nArcs.setText(Integer.toString(PresetSolution.graph.getArcs().size()));
+					presetMaxCost.setText(Long.toString(PresetSolution.maxPathCost));
+					
+					//find feasible solution for current file
+					FeasibleSolution.findFeasibleSolution();
+					computationTime.setText(Long.toString(FeasibleSolution.computationTime));
+					maxCost.setText(Long.toString(FeasibleSolution.maxCost));
+					
+					//save result
+					File folder2 = new File(System.getProperty("user.dir") + "/resources/output");
+					int maxCount = 0;
+					for (File file2 : folder2.listFiles()) {
+						if (file2.isFile() && file2.getName().startsWith(fileName) && file2.getName().endsWith(".xml")) {
+							try {
+								int x = Integer.parseInt(file2.getName().replace(fileName + "_", "").replace(".xml", ""));
+								if (x >= maxCount) {
+									maxCount++;
+								}
+							}
+							catch (NumberFormatException ex) {
+								ex.printStackTrace();
+							}
+						} 
+					}
+					File f;
+					try {
+						f = new File(new File(System.getProperty("user.dir") + "/resources/output/" + fileName + "_" + maxCount + ".xml").getCanonicalPath());
+						Writer.writeDataToFile(f, true);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					
+				}
+			}
+		});
+		btnRunAllFiles.setIcon(new ImageIcon(MainWindow.class.getResource("/images/green-right-double-arrows.png")));
+		GridBagConstraints gbc_btnRunAllFiles = new GridBagConstraints();
+		gbc_btnRunAllFiles.insets = new Insets(0, 0, 0, 5);
+		gbc_btnRunAllFiles.gridx = 1;
+		gbc_btnRunAllFiles.gridy = 0;
+		Run.add(btnRunAllFiles, gbc_btnRunAllFiles);
 		
 		JPanel Result = new JPanel();
 		Result.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Result", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -344,7 +393,4 @@ public class MainWindow {
 		Result.add(btnDetails, gbc_btnDetails);
 	}
 
-	public JProgressBar getProgressBar() {
-		return progressBar;
-	}
 }

@@ -37,8 +37,8 @@ public class FileChooserHelper {
 		fc.setFileFilter(new XmlFileFilter());
 		fc.setAcceptAllFileFilterUsed(false);
 		//form name of file
-		String fileName = "test_p" + Generator.nVehicles + "v" + Generator.nVertexes + "a" + Generator.nArcs;
-		DateFormat dateFormat = new SimpleDateFormat("yyMMddHHmm");
+		String fileName = "test_p" + Generator.nVehicles + "v" + Generator.nVertexes + "a" + Generator.nArcs + "d" + Generator.DEADLINE_RESERVE;
+		DateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmssSS");
 		Date date = new Date();
 		File f;
 		try {
