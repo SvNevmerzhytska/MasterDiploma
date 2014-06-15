@@ -22,7 +22,8 @@ public class Generator {
 	private static long maxCost;
 	private static int SERVICE_COST = 2;
 	private static int TRANSIT_COST = 1;
-	private static int DEADLINE_STEP = 5;
+	private static int DEADLINE_STEP = 10;
+	public static int DEADLINE_RESERVE = 10;
 	
 	//return true if generation process was successful
 	public static boolean generateData() {
@@ -242,7 +243,7 @@ public class Generator {
 					while (deadline < pathCost) {
 						deadline += DEADLINE_STEP;
 					}
-					pathArc.arc.setDeadline(deadline);
+					pathArc.arc.setDeadline(deadline + DEADLINE_RESERVE);
 				} else {
 					pathCost += TRANSIT_COST;
 				}

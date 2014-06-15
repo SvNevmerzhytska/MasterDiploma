@@ -36,6 +36,7 @@ public class GenerateGraphDialog extends JDialog {
 	private JLabel lblNumberOfArcs;
 	private JLabel lblNumberOfVertexes;
 	private JLabel statusGeneration;
+	private JTextField tfDedlineReserve;
 
 	/**
 	 * Launch the application.
@@ -62,7 +63,7 @@ public class GenerateGraphDialog extends JDialog {
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[]{212, 212, 0};
 		gbl_contentPanel.rowHeights = new int[] {50, 0, 23, 23, 23, 0};
-		gbl_contentPanel.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPanel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
 		{
@@ -127,6 +128,26 @@ public class GenerateGraphDialog extends JDialog {
 			gbc_nArcs.gridy = 3;
 			contentPanel.add(nArcs, gbc_nArcs);
 			nArcs.setColumns(10);
+		}
+		{
+			JLabel lblDedlineReserve = new JLabel("Dedline reserve:");
+			GridBagConstraints gbc_lblDedlineReserve = new GridBagConstraints();
+			gbc_lblDedlineReserve.anchor = GridBagConstraints.EAST;
+			gbc_lblDedlineReserve.insets = new Insets(0, 0, 5, 5);
+			gbc_lblDedlineReserve.gridx = 0;
+			gbc_lblDedlineReserve.gridy = 4;
+			contentPanel.add(lblDedlineReserve, gbc_lblDedlineReserve);
+		}
+		{
+			tfDedlineReserve = new JTextField();
+			tfDedlineReserve.setText("10");
+			GridBagConstraints gbc_tfDedlineReserve = new GridBagConstraints();
+			gbc_tfDedlineReserve.insets = new Insets(0, 0, 5, 0);
+			gbc_tfDedlineReserve.fill = GridBagConstraints.HORIZONTAL;
+			gbc_tfDedlineReserve.gridx = 1;
+			gbc_tfDedlineReserve.gridy = 4;
+			contentPanel.add(tfDedlineReserve, gbc_tfDedlineReserve);
+			tfDedlineReserve.setColumns(10);
 		}
 		{
 			JLabel lblStatus = new JLabel("Status:");
@@ -208,6 +229,7 @@ public class GenerateGraphDialog extends JDialog {
 			Generator.nVehicles = Integer.parseInt(nVehicles.getText());
 			Generator.nVertexes = Integer.parseInt(nVertexes.getText());
 			Generator.nArcs = Integer.parseInt(nArcs.getText());
+			Generator.DEADLINE_RESERVE = Integer.parseInt(tfDedlineReserve.getText());
 			if(Generator.generateData()) {
 				statusGeneration.setText("Generated");
 				statusGeneration.setIcon(new ImageIcon(GenerateGraphDialog.class.getResource("/images/green_circle.png")));
@@ -225,6 +247,7 @@ public class GenerateGraphDialog extends JDialog {
 		nVehicles.setText("1");
 		nVertexes.setText("2");
 		nArcs.setText("2");
+		tfDedlineReserve.setText("10");
 		statusGeneration.setText("Not generated");
 		statusGeneration.setIcon(new ImageIcon(GenerateGraphDialog.class.getResource("/images/red_circle.png")));
 		//reset graph (for details)

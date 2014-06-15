@@ -38,7 +38,7 @@ public class FileChooserHelper {
 		fc.setAcceptAllFileFilterUsed(false);
 		//form name of file
 		String fileName = "test_p" + Generator.nVehicles + "v" + Generator.nVertexes + "a" + Generator.nArcs;
-		DateFormat dateFormat = new SimpleDateFormat("yyMMddHH");
+		DateFormat dateFormat = new SimpleDateFormat("yyMMddHHmm");
 		Date date = new Date();
 		File f;
 		try {
